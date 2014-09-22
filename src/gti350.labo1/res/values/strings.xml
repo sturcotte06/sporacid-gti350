@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  -->
+
     <string name="app_name">Out of the Box</string>
-    <!--  Actions -->
+    <!-- Actions -->
     <string name="action_settings">Settings</string>
     <string name="action_start_fight">Start Fight</string>
-    
     <!-- Titles -->
     <string name="title_activity_main">Main Screen</string>
+    <string name="title_activity_fighter_definition">Fighters Definition</string>
+    <!-- Labels -->
+    <string name="red_fighter_label">Red Fighter</string>
+    <string name="blue_fighter_label">Blue Fighter</string>
+    <string name="first_judge_label">1st Judge</string>
+    <string name="second_judge_label">2nd Judge</string>
+    <string name="third_judge_label">3rd Judge</string>
+	<!-- Error messages -->
+	<string name="red_fighter_empty">The red fighter must have a name.</string>
+	<string name="blue_fighter_empty">The blue fighter must have a name.</string>
 </resources>

@@ -1,9 +1,6 @@
 package com.gti350.labo1;
 
-import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.View;
 
 /**
  * 
@@ -24,7 +21,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 	 * @param view
 	 *            The view on which to apply the background.
 	 */
-	protected void applyOrientedBackground(View view) {
+	/*protected void applyOrientedBackground(View view) {
 		Log.i(getLoggingTag(),
 				"Applying background depending on screen orientation.");
 
@@ -34,5 +31,5 @@ public abstract class BaseActivity extends ActionBarActivity {
 		} else {
 			view.setBackgroundResource(R.drawable.boxing_ring_portrait);
 		}
-	}
+	}*/
 }

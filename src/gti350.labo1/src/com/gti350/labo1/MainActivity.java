@@ -1,5 +1,6 @@
 package com.gti350.labo1;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,6 @@ public class MainActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		// Apply portrait or landscape background.
-		applyOrientedBackground((View) findViewById(R.id.activity_main));
 
 		// Bind touch events on buttons.
 		Button settingsButton = (Button) findViewById(R.id.button_settings);
@@ -53,9 +51,6 @@ public class MainActivity extends BaseActivity {
 	public void onConfigurationChanged(Configuration configure) {
 		super.onConfigurationChanged(configure);
 		Log.i(LoggingTag, "Configuration change detected.");
-
-		// Apply portrait or landscape background.
-		applyOrientedBackground((View) findViewById(R.id.activity_main));
 	}
 
 	@Override
@@ -81,47 +76,12 @@ public class MainActivity extends BaseActivity {
 	private class OnStartFightButtonClicked implements View.OnClickListener {
 		@Override
 		public void onClick(View v) {
-			// simulateLenghtyOperation();
-		}
+			// Start the fighter's definition activity.
+			Intent i = new Intent(MainActivity.this, FighterDefinitionActivity.class);
+			startActivity(i);
 
-		// private void simulateLenghtyOperation() {
-		// Intent intent = new Intent(MainActivity.this,
-		// SplashScreenActivity.class);
-		// startActivity(intent);
-		//
-		// final int iterations = 10;
-		// final ProgressBar progressBar = (ProgressBar)
-		// findViewById(R.id.splash_screen_progress_bar);
-		//
-		// final Thread runnable = new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// try {
-		//
-		// for (int iIteration = 0; iIteration < iterations; iIteration++) {
-		// int newProgress = (int) ((iIteration + 1.0) / iterations *
-		// progressBar.getMax());
-		// Log.i(getLoggingTag(), "New Progress : " + newProgress);
-		//
-		// Thread.sleep(500);
-		// progressBar.setProgress(newProgress);
-		// }
-		// } catch (InterruptedException ex) {
-		// // Propagate.
-		// Thread.currentThread().interrupt();
-		// }
-		//
-		// }
-		// });
-		//
-		// runnable.start();
-		//
-		// try {
-		// runnable.join();
-		// } catch (InterruptedException e) {
-		// // Propagate.
-		// Thread.currentThread().interrupt();
-		// }
-		// }
+			// close this activity
+			finish();
+		}
 	}
 }
