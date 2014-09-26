@@ -1,7 +1,11 @@
 package com.gti350.labo1;
 
 import com.gti350.labo1.listeners.SwipeGestureListener;
+import com.gti350.labo1.listeners.SwipeListener;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +53,61 @@ public class FighterDefinitionActivity extends BaseActivity {
 		messageLabel = (TextView) findViewById(R.id.label_message);
 		messageContainer = (ViewGroup) findViewById(R.id.label_message_layout);
 		handler = new Handler();
-		gestureDetector = new GestureDetectorCompat(this, new SwipeGestureListener(this, MainActivity.class, JudgeDefinitionActivity.class));
+		// gestureDetector = new GestureDetectorCompat(this,
+		// new SwipeListener(this, MainActivity.class,
+		// JudgeDefinitionActivity.class));
+		SwipeListener sl = new SwipeListener();
+		sl.setNextSwipe(new SwipeListener.IOnNextSwipe() {
+
+			@Override
+			public boolean IOnNextSwipe(MotionEvent event1, MotionEvent event2,
+					float velocityX, float velocityY) {
+				// TODO Auto-generated method stub
+				// Validate current activity content.
+				Editable redFighter = redFighterTextbox.getText();
+				Editable blueFighter = blueFighterTextbox.getText();
+
+				boolean requiresLineCarriage = false;
+				StringBuilder stringBuilder = new StringBuilder();
+				if (redFighter.length() == 0) {
+					stringBuilder.append(getString(R.string.red_fighter_empty));
+					requiresLineCarriage = true;
+				}
+
+				if (blueFighter.length() == 0) {
+					stringBuilder.append(requiresLineCarriage ? "\n" : "")
+							.append(getString(R.string.blue_fighter_empty));
+				}
+
+				if (stringBuilder.length() == 0) {
+					Intent i = new Intent(FighterDefinitionActivity.this,
+							JudgeDefinitionActivity.class);
+					startActivity(i);
+
+					return true;
+				}
+
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(
+						FighterDefinitionActivity.this);
+				builder1.setTitle("Alert");
+				builder1.setMessage(stringBuilder);
+				builder1.setCancelable(true);
+				builder1.setNeutralButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.dismiss();
+							}
+						});
+
+				AlertDialog alert11 = builder1.create();
+				alert11.show();
+
+				return false;
+			}
+		});
+		
+
+		gestureDetector = new GestureDetectorCompat(this, sl);
 	}
 
 	@Override
@@ -69,43 +127,6 @@ public class FighterDefinitionActivity extends BaseActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// Validate current activity content.
-		Editable redFighter = redFighterTextbox.getText();
-		Editable blueFighter = blueFighterTextbox.getText();
-
-		boolean requiresLineCarriage = false;
-		StringBuilder stringBuilder = new StringBuilder();
-		if (redFighter.length() == 0) {
-			stringBuilder.append(getString(R.string.red_fighter_empty));
-			requiresLineCarriage = true;
-		}
-
-		if (blueFighter.length() == 0) {
-			stringBuilder.append(requiresLineCarriage ? "\n" : "").append(getString(R.string.blue_fighter_empty));
-		}
-
-		if (stringBuilder.length() == 0) {
-			// No validation error. We may proceed.
-			return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
-		}
-
-		// Show the error.
-		messageLabel.setText(stringBuilder);
-		messageContainer.setVisibility(View.VISIBLE);
-
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				messageContainer.setVisibility(View.INVISIBLE);
-				// messageContainer.setVisibility(View.GONE);
-			}
-		}, 5000);
-
-		return super.onTouchEvent(event);
 	}
 
 	@Override
