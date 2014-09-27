@@ -1,7 +1,9 @@
 package com.gti350.labo1;
 
 import com.gti350.labo1.listeners.SwipeGestureListener;
+import com.gti350.labo1.listeners.SwipeGestureListener.IOnSwipeListener;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
@@ -23,7 +25,9 @@ public class JudgeDefinitionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_judge_definition);
 
-		this.gestureDetector = new GestureDetectorCompat(this, new SwipeGestureListener(this, MainActivity.class, SplashScreenActivity.class));
+		// Create the listener for swiping.
+		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new IOnNextSwipeListener(), new IOnPreviousSwipeListener());
+		gestureDetector = new GestureDetectorCompat(this, swipeGestureListener);
 	}
 
 	@Override
@@ -47,8 +51,7 @@ public class JudgeDefinitionActivity extends BaseActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		this.gestureDetector.onTouchEvent(event);
-		return super.onTouchEvent(event);
+		return this.gestureDetector.onTouchEvent(event) && super.onTouchEvent(event);
 	}
 
 	@Override
@@ -60,5 +63,22 @@ public class JudgeDefinitionActivity extends BaseActivity {
 	@Override
 	protected String getLoggingTag() {
 		return LoggingTag;
+	}
+
+	private class IOnPreviousSwipeListener implements IOnSwipeListener {
+		@Override
+		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+			Intent i = new Intent(JudgeDefinitionActivity.this, FighterDefinitionActivity.class);
+			startActivity(i);
+
+			return true;
+		}
+	}
+
+	private class IOnNextSwipeListener implements IOnSwipeListener {
+		@Override
+		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+			return false;
+		}
 	}
 }
