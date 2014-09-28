@@ -1,35 +1,50 @@
 package com.gti350.labo1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 
 /**
  * 
- * @author Simon Turcotte-Langevin
+ * @author Laurianne Michaud, Simon Turcotte-Langevin
  */
 public abstract class BaseActivity extends ActionBarActivity {
-
 	/**
-	 * Returns the logging tag for the current activity.
+	 * Displays an alert for the validations messages in parameter.
 	 * 
-	 * @return The logging tag.
+	 * @param validationMessages
+	 *            The validation messages.
 	 */
-	protected abstract String getLoggingTag();
-
-	/**
-	 * Applies the good background based on the app's orientation.
-	 * 
-	 * @param view
-	 *            The view on which to apply the background.
-	 */
-	/*protected void applyOrientedBackground(View view) {
-		Log.i(getLoggingTag(),
-				"Applying background depending on screen orientation.");
-
-		int orientation = getResources().getConfiguration().orientation;
-		if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			view.setBackgroundResource(R.drawable.boxing_ring_landscape);
-		} else {
-			view.setBackgroundResource(R.drawable.boxing_ring_portrait);
+	protected void displayValidationAlert(String... validationMessages) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String validationMessage : validationMessages) {
+			stringBuilder.append(validationMessage).append("\n");
 		}
-	}*/
+
+		// Truncate last line carriage.
+		stringBuilder.setLength(stringBuilder.length() - "\n".length());
+		
+		// Call overload.
+		displayValidationAlert(stringBuilder);
+	}
+
+	/**
+	 * Displays an alert for the validations message in parameter.
+	 * 
+	 * @param validationMessage
+	 *            The validation message.
+	 */
+	protected void displayValidationAlert(CharSequence validationMessage) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+		builder.setTitle(R.string.title_alert_validation);
+		builder.setMessage(validationMessage);
+		builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
+
+		builder.create().show();
+	}
 }

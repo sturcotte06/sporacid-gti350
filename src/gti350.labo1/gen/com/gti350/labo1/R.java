@@ -1281,21 +1281,26 @@ containing a value of this type.
         public static final int action_settings=0x7f0a000e;
         public static final int action_start_fight=0x7f0a000f;
         public static final int app_name=0x7f0a000d;
-        public static final int blue_fighter_empty=0x7f0a0018;
-        public static final int blue_fighter_label=0x7f0a0013;
-        public static final int first_judge_label=0x7f0a0014;
+        public static final int blue_fighter_empty=0x7f0a001a;
+        public static final int blue_fighter_label=0x7f0a0015;
+        public static final int first_judge_empty=0x7f0a001b;
+        public static final int first_judge_label=0x7f0a0016;
         /**  Error messages 
          */
-        public static final int red_fighter_empty=0x7f0a0017;
+        public static final int red_fighter_empty=0x7f0a0019;
         /**  Labels 
          */
-        public static final int red_fighter_label=0x7f0a0012;
-        public static final int second_judge_label=0x7f0a0015;
-        public static final int third_judge_label=0x7f0a0016;
+        public static final int red_fighter_label=0x7f0a0014;
+        public static final int second_judge_empty=0x7f0a001c;
+        public static final int second_judge_label=0x7f0a0017;
+        public static final int third_judge_empty=0x7f0a001d;
+        public static final int third_judge_label=0x7f0a0018;
         public static final int title_activity_fighter_definition=0x7f0a0011;
+        public static final int title_activity_judge_definition=0x7f0a0012;
         /**  Titles 
          */
         public static final int title_activity_main=0x7f0a0010;
+        public static final int title_alert_validation=0x7f0a0013;
     }
     public static final class style {
         /** 

@@ -33,6 +33,10 @@
             android:name=".FighterDefinitionActivity"
             android:label="@string/title_activity_fighter_definition" >
         </activity>
+        <activity
+            android:name=".JudgeDefinitionActivity"
+            android:label="@string/title_activity_judge_definition" >
+        </activity>
     </application>
 
 </manifest>

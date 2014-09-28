@@ -1,5 +1,7 @@
 package com.gti350.labo1.models;
 
+import com.gti350.labo1.models.utils.ParcelableHelper;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,6 +11,10 @@ import android.os.Parcelable;
  * @author Simon Turcotte-Langevin
  */
 public class Fighter implements Parcelable {
+
+	/** Creator object for the parcelable implementation. */
+	public static final Parcelable.Creator<Fighter> CREATOR = ParcelableHelper.getDefaultCreator(Fighter.class);
+
 	/**
 	 * Enumeration of all possible fighter colors.
 	 * 
@@ -46,6 +52,21 @@ public class Fighter implements Parcelable {
 	}
 
 	/**
+	 * Parcelable required constructor.
+	 * 
+	 * @param src
+	 *            The parcel that describes this fighter.
+	 */
+	public Fighter(Parcel src) {
+		if (src == null) {
+			throw new IllegalArgumentException("src cannot be null.");
+		}
+
+		this.color = FighterColor.valueOf(src.readString());
+		this.name = src.readString();
+	}
+
+	/**
 	 * @return The name of the fighter.
 	 */
 	public String getName() {
@@ -61,13 +82,12 @@ public class Fighter implements Parcelable {
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
-
+		dest.writeString(this.color.name());
+		dest.writeString(this.name);
 	}
 }

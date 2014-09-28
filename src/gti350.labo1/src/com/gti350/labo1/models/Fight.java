@@ -1,18 +1,27 @@
 package com.gti350.labo1.models;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+
+import com.gti350.labo1.models.utils.ParcelableHelper;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * 
  * @author Simon Turcotte-Langevin
- *
+ * 
  */
-public class Fight {
+public class Fight implements Parcelable {
 	/** */
 	private static final int MaxRound = 12;
+
+	/** Creator object for the parcelable implementation. */
+	public static final Parcelable.Creator<Fight> CREATOR = ParcelableHelper.getDefaultCreator(Fight.class);
+
 	/** */
-	private final Collection<Round> rounds;
+	private final List<Round> rounds;
 	/** */
 	private final Judge judge1;
 	/** */
@@ -23,7 +32,7 @@ public class Fight {
 	private final Fighter fighter1;
 	/** */
 	private final Fighter fighter2;
-	
+
 	/**
 	 * 
 	 * @param fighter1
@@ -36,27 +45,27 @@ public class Fight {
 		if (fighter1 == null) {
 			throw new IllegalArgumentException("fighter1 cannot be null.");
 		}
-		
+
 		if (fighter2 == null) {
 			throw new IllegalArgumentException("fighter2 cannot be null.");
 		}
-		
+
 		if (fighter1.getColor() == fighter2.getColor()) {
 			throw new IllegalArgumentException("fighter1 and fighter2 cannot have the same color.");
 		}
-		
+
 		if (judge1 == null) {
 			throw new IllegalArgumentException("judge1 cannot be null.");
 		}
-		
+
 		if (judge2 == null) {
 			throw new IllegalArgumentException("judge2 cannot be null.");
 		}
-		
+
 		if (judge3 == null) {
 			throw new IllegalArgumentException("judge3 cannot be null.");
 		}
-		
+
 		this.rounds = new ArrayList<>(MaxRound);
 		this.judge1 = judge1;
 		this.judge2 = judge2;
@@ -64,7 +73,29 @@ public class Fight {
 		this.fighter1 = fighter1;
 		this.fighter2 = fighter2;
 	}
-	
+
+	/**
+	 * Parcelable required constructor.
+	 * 
+	 * @param src
+	 *            The parcel that describes this judge.
+	 */
+	public Fight(Parcel src) {
+		if (src == null) {
+			throw new IllegalArgumentException("src cannot be null.");
+		}
+
+		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		this.fighter1 = src.readParcelable(classLoader);
+		this.fighter2 = src.readParcelable(classLoader);
+		this.judge1 = src.readParcelable(classLoader);
+		this.judge2 = src.readParcelable(classLoader);
+		this.judge3 = src.readParcelable(classLoader);
+
+		this.rounds = new ArrayList<>();
+		src.readTypedList(this.rounds, Round.CREATOR);
+	}
+
 	/**
 	 * 
 	 * @param judgeScore1
@@ -75,20 +106,35 @@ public class Fight {
 		if (this.rounds.size() >= MaxRound) {
 			throw new IllegalStateException("Cannot register a new round for this fight.");
 		}
-		
+
 		if (judgeScore1 == null) {
 			throw new IllegalArgumentException("judgeScore1 cannot be null.");
 		}
-		
+
 		if (judgeScore2 == null) {
 			throw new IllegalArgumentException("judgeScore2 cannot be null.");
 		}
-		
+
 		if (judgeScore3 == null) {
 			throw new IllegalArgumentException("judgeScore3 cannot be null.");
 		}
-		
+
 		Round newRound = new Round();
 		this.rounds.add(newRound);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(fighter1, 0);
+		dest.writeParcelable(fighter2, 0);
+		dest.writeParcelable(judge1, 0);
+		dest.writeParcelable(judge2, 0);
+		dest.writeParcelable(judge3, 0);
+		dest.writeTypedList(rounds);
 	}
 }

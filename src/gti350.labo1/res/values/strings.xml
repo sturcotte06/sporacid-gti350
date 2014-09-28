@@ -8,13 +8,19 @@
     <!-- Titles -->
     <string name="title_activity_main">Main Screen</string>
     <string name="title_activity_fighter_definition">Fighters Definition</string>
+    <string name="title_activity_judge_definition">Judges Definition</string>
+    <string name="title_alert_validation">Validation Alert</string>
     <!-- Labels -->
     <string name="red_fighter_label">Red Fighter</string>
     <string name="blue_fighter_label">Blue Fighter</string>
     <string name="first_judge_label">1st Judge</string>
     <string name="second_judge_label">2nd Judge</string>
     <string name="third_judge_label">3rd Judge</string>
-	<!-- Error messages -->
-	<string name="red_fighter_empty">The red fighter must have a name.</string>
-	<string name="blue_fighter_empty">The blue fighter must have a name.</string>
+    <!-- Error messages -->
+    <string name="red_fighter_empty">The red fighter must have a name.</string>
+    <string name="blue_fighter_empty">The blue fighter must have a name.</string>
+    <string name="first_judge_empty">The first judge must have a name.</string>
+    <string name="second_judge_empty">The second judge must have a name.</string>
+    <string name="third_judge_empty">The third judge must have a name.</string>
+
 </resources>
