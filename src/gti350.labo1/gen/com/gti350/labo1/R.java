@@ -1087,6 +1087,91 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020059;
     }
     public static final class id {
+        public static final int TableRow01=0x7f05005d;
+        public static final int TableRow02=0x7f050064;
+        public static final int TableRow03=0x7f05006b;
+        public static final int TableRow04=0x7f050072;
+        public static final int TableRow05=0x7f050079;
+        public static final int TableRow06=0x7f050080;
+        public static final int TableRow07=0x7f050087;
+        public static final int TableRow08=0x7f05008e;
+        public static final int TableRow09=0x7f050095;
+        public static final int TableRow10=0x7f05009c;
+        public static final int TableRow11=0x7f0500a3;
+        public static final int TableRow12=0x7f0500aa;
+        public static final int TextView01=0x7f050063;
+        public static final int TextView02=0x7f05005e;
+        public static final int TextView03=0x7f050062;
+        public static final int TextView04=0x7f050061;
+        public static final int TextView05=0x7f050060;
+        public static final int TextView06=0x7f05005f;
+        public static final int TextView07=0x7f050065;
+        public static final int TextView08=0x7f05006a;
+        public static final int TextView09=0x7f050068;
+        public static final int TextView10=0x7f050066;
+        public static final int TextView11=0x7f050069;
+        public static final int TextView12=0x7f050067;
+        public static final int TextView13=0x7f05006e;
+        public static final int TextView14=0x7f05006d;
+        public static final int TextView15=0x7f050070;
+        public static final int TextView16=0x7f05006f;
+        public static final int TextView17=0x7f050071;
+        public static final int TextView18=0x7f05006c;
+        public static final int TextView19=0x7f050075;
+        public static final int TextView20=0x7f050074;
+        public static final int TextView21=0x7f050077;
+        public static final int TextView22=0x7f050076;
+        public static final int TextView23=0x7f050078;
+        public static final int TextView24=0x7f050073;
+        public static final int TextView25=0x7f05007c;
+        public static final int TextView26=0x7f05007b;
+        public static final int TextView27=0x7f05007e;
+        public static final int TextView28=0x7f05007d;
+        public static final int TextView29=0x7f05007f;
+        public static final int TextView30=0x7f05007a;
+        public static final int TextView31=0x7f050083;
+        public static final int TextView32=0x7f050082;
+        public static final int TextView33=0x7f050085;
+        public static final int TextView34=0x7f050084;
+        public static final int TextView35=0x7f050086;
+        public static final int TextView36=0x7f050081;
+        public static final int TextView37=0x7f05008a;
+        public static final int TextView38=0x7f050089;
+        public static final int TextView39=0x7f05008c;
+        public static final int TextView40=0x7f05008b;
+        public static final int TextView41=0x7f05008d;
+        public static final int TextView42=0x7f050088;
+        public static final int TextView43=0x7f050091;
+        public static final int TextView44=0x7f050090;
+        public static final int TextView45=0x7f050093;
+        public static final int TextView46=0x7f050092;
+        public static final int TextView47=0x7f050094;
+        public static final int TextView48=0x7f05008f;
+        public static final int TextView49=0x7f050098;
+        public static final int TextView50=0x7f050097;
+        public static final int TextView51=0x7f05009a;
+        public static final int TextView52=0x7f050099;
+        public static final int TextView53=0x7f05009b;
+        public static final int TextView54=0x7f050096;
+        public static final int TextView55=0x7f05009f;
+        public static final int TextView56=0x7f05009e;
+        public static final int TextView57=0x7f0500a1;
+        public static final int TextView58=0x7f0500a0;
+        public static final int TextView59=0x7f0500a2;
+        public static final int TextView60=0x7f05009d;
+        public static final int TextView61=0x7f0500a4;
+        public static final int TextView62=0x7f0500a8;
+        public static final int TextView63=0x7f0500a5;
+        public static final int TextView64=0x7f0500a9;
+        public static final int TextView65=0x7f0500a7;
+        public static final int TextView66=0x7f0500a6;
+        public static final int TextView67=0x7f0500ab;
+        public static final int TextView68=0x7f0500af;
+        public static final int TextView69=0x7f0500ac;
+        public static final int TextView70=0x7f0500b0;
+        public static final int TextView71=0x7f0500ae;
+        public static final int TextView72=0x7f0500ad;
+        public static final int TextView77=0x7f0500b1;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1098,7 +1183,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050054;
+        public static final int action_settings=0x7f0500b4;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1126,10 +1211,10 @@ containing a value of this type.
         public static final int label_red_fighter=0x7f05003e;
         public static final int label_second_judge=0x7f050049;
         public static final int label_third_judge=0x7f05004b;
-        public static final int landscape_activity_fighter_definition=0x7f05003c;
         public static final int landscape_activity_judge_definition=0x7f050045;
         public static final int landscape_activity_main=0x7f05004d;
-        public static final int landscape_activity_splash_screen=0x7f050051;
+        public static final int landscape_activity_results=0x7f05003c;
+        public static final int landscape_activity_splash_screen=0x7f0500b2;
         public static final int layout_fighter_definition=0x7f05003d;
         public static final int layout_judge_definition=0x7f050046;
         public static final int listMode=0x7f050001;
@@ -1140,7 +1225,7 @@ containing a value of this type.
         public static final int normal=0x7f050000;
         public static final int portrait_activity_fighter_definition=0x7f050044;
         public static final int portrait_activity_main=0x7f050050;
-        public static final int portrait_activity_splash_screen=0x7f050053;
+        public static final int portrait_activity_splash_screen=0x7f0500b3;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1161,7 +1246,18 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int textView1=0x7f050052;
+        public static final int tableLayout1=0x7f050051;
+        public static final int tableRow1=0x7f050052;
+        public static final int tableRow2=0x7f050056;
+        public static final int textView1=0x7f050053;
+        public static final int textView10=0x7f050059;
+        public static final int textView11=0x7f05005a;
+        public static final int textView12=0x7f05005b;
+        public static final int textView13=0x7f05005c;
+        public static final int textView2=0x7f050054;
+        public static final int textView3=0x7f050055;
+        public static final int textView4=0x7f050057;
+        public static final int textView9=0x7f050058;
         public static final int textbox_blue_fighter=0x7f050041;
         public static final int textbox_first_judge=0x7f050048;
         public static final int textbox_red_fighter=0x7f05003f;
@@ -1226,8 +1322,9 @@ containing a value of this type.
         public static final int activity_fighter_definition=0x7f030018;
         public static final int activity_judge_definition=0x7f030019;
         public static final int activity_main=0x7f03001a;
-        public static final int activity_splash_screen=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int activity_results=0x7f03001b;
+        public static final int activity_splash_screen=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int fighter_definition=0x7f0c0000;
@@ -1281,26 +1378,28 @@ containing a value of this type.
         public static final int action_settings=0x7f0a000e;
         public static final int action_start_fight=0x7f0a000f;
         public static final int app_name=0x7f0a000d;
-        public static final int blue_fighter_empty=0x7f0a001a;
-        public static final int blue_fighter_label=0x7f0a0015;
-        public static final int first_judge_empty=0x7f0a001b;
-        public static final int first_judge_label=0x7f0a0016;
+        public static final int blue_fighter_empty=0x7f0a001c;
+        public static final int blue_fighter_label=0x7f0a0016;
+        public static final int first_judge_empty=0x7f0a001d;
+        public static final int first_judge_label=0x7f0a0017;
         /**  Error messages 
          */
-        public static final int red_fighter_empty=0x7f0a0019;
+        public static final int red_fighter_empty=0x7f0a001b;
         /**  Labels 
          */
-        public static final int red_fighter_label=0x7f0a0014;
-        public static final int second_judge_empty=0x7f0a001c;
-        public static final int second_judge_label=0x7f0a0017;
-        public static final int third_judge_empty=0x7f0a001d;
-        public static final int third_judge_label=0x7f0a0018;
+        public static final int red_fighter_label=0x7f0a0015;
+        public static final int results_decision=0x7f0a001a;
+        public static final int second_judge_empty=0x7f0a001e;
+        public static final int second_judge_label=0x7f0a0018;
+        public static final int third_judge_empty=0x7f0a001f;
+        public static final int third_judge_label=0x7f0a0019;
         public static final int title_activity_fighter_definition=0x7f0a0011;
         public static final int title_activity_judge_definition=0x7f0a0012;
         /**  Titles 
          */
         public static final int title_activity_main=0x7f0a0010;
-        public static final int title_alert_validation=0x7f0a0013;
+        public static final int title_activity_results=0x7f0a0013;
+        public static final int title_alert_validation=0x7f0a0014;
     }
     public static final class style {
         /** 
