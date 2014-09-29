@@ -6,9 +6,52 @@ import android.support.v7.app.ActionBarActivity;
 
 /**
  * 
- * @author Laurianne Michaud, Simon Turcotte-Langevin
+ * @author Laurianne Michaud, Alexandre Billot, Simon Turcotte-Langevin
+ * @version 1.0
  */
 public abstract class BaseActivity extends ActionBarActivity {
+	/**
+	 * Key to be used whenever we want to serialize the red fighter object into
+	 * an intent.
+	 */
+	protected static final String RedFighterKey = "FighterDefinition_RedFighter";
+
+	/**
+	 * Key to be used whenever we want to serialize the blue fighter object into
+	 * an intent.
+	 */
+	protected static final String BlueFighterKey = "FighterDefinition_BlueFighter";
+
+	/**
+	 * Key to be used whenever we want to serialize the blue fighter object into
+	 * an intent.
+	 */
+	protected static final String FirstJudgeKey = "JudgeDefinition_FirstJudge";
+
+	/**
+	 * Key to be used whenever we want to serialize the first judge object into
+	 * an intent.
+	 */
+	protected static final String SecondJudgeKey = "JudgeDefinition_SecondJudge";
+
+	/**
+	 * Key to be used whenever we want to serialize the second judge object into
+	 * an intent.
+	 */
+	protected static final String ThirdJudgeKey = "JudgeDefinition_ThirdJudge";
+
+	/**
+	 * Key to be used whenever we want to serialize the third judge into an
+	 * intent.
+	 */
+	protected static final String FightKey = "FightDefinition_Fight";
+
+	/**
+	 * Key to be used whenever we want to serialize the current round counter
+	 * into an intent.
+	 */
+	protected static final String CurrentRoundCounterKey = "RoundDefinition_CurrentRoundCounter";
+
 	/**
 	 * Displays an alert for the validations messages in parameter.
 	 * 
@@ -23,7 +66,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
 		// Truncate last line carriage.
 		stringBuilder.setLength(stringBuilder.length() - "\n".length());
-		
+
 		// Call overload.
 		displayValidationAlert(stringBuilder);
 	}

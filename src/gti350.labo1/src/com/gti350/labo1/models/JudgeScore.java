@@ -1,10 +1,18 @@
 package com.gti350.labo1.models;
 
+import com.gti350.labo1.models.utils.ParcelableHelper;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 
  * @author Simon Turcotte-Langevin
  */
-public class JudgeScore {
+public class JudgeScore implements Parcelable {
+	/** Creator object for the parcelable implementation. */
+	public static final Parcelable.Creator<JudgeScore> CREATOR = ParcelableHelper.getDefaultCreator(JudgeScore.class);
+
 	/** The judge that made this registered this score. */
 	private final Judge judge;
 	/** The score for the first fighter. */
@@ -41,6 +49,23 @@ public class JudgeScore {
 	}
 
 	/**
+	 * Parcelable required constructor.
+	 * 
+	 * @param src
+	 *            The parcel that describes this judge.
+	 */
+	public JudgeScore(Parcel src) {
+		if (src == null) {
+			throw new IllegalArgumentException("src cannot be null.");
+		}
+
+		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		this.judge = src.readParcelable(classLoader);
+		this.scoreFighter1 = src.readParcelable(classLoader);
+		this.scoreFighter2 = src.readParcelable(classLoader);
+	}
+
+	/**
 	 * @return the judge
 	 */
 	public Judge getJudge() {
@@ -61,4 +86,15 @@ public class JudgeScore {
 		return scoreFighter2;
 	}
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(this.judge, flags);
+		dest.writeParcelable(this.scoreFighter1, flags);
+		dest.writeParcelable(this.scoreFighter2, flags);
+	}
 }

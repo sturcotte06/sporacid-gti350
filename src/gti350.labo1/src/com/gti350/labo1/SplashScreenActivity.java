@@ -7,8 +7,8 @@ import android.os.Handler;
 import android.util.Log;
 
 /**
- * 
- * @author Simon Turcotte-Langevin
+ * @author Laurianne Michaud, Alexandre Billot, Simon Turcotte-Langevin
+ * @version 1.0
  */
 public class SplashScreenActivity extends BaseActivity {
 

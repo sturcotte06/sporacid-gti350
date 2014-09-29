@@ -5,15 +5,22 @@
     <!-- Actions -->
     <string name="action_settings">Settings</string>
     <string name="action_start_fight">Start Fight</string>
+    <string name="action_ko">K.O</string>
+    <string name="action_tko">K.O.T</string>
+    <string name="action_penalty">Penalty</string>
+    <string name="action_disqualified">Disqualified</string>
     <!-- Titles -->
     <string name="title_activity_main">Main Screen</string>
     <string name="title_activity_fighter_definition">Fighters Definition</string>
     <string name="title_activity_judge_definition">Judges Definition</string>
     <string name="title_activity_results">Results</string>
- <string name="title_activity_round_definition">Rounds Definition</string>   <string name="title_alert_validation">Validation Alert</string>
+    <string name="title_activity_round_definition">Round Definition</string>
+    <string name="title_alert_validation">Validation Alert</string>
     <!-- Labels -->
     <string name="red_fighter_label">Red Fighter</string>
+    <string name="red_fighter_short_label">Red</string>
     <string name="blue_fighter_label">Blue Fighter</string>
+    <string name="blue_fighter_short_label">Blue</string>
     <string name="first_judge_label">1st Judge</string>
     <string name="second_judge_label">2nd Judge</string>
     <string name="third_judge_label">3rd Judge</string>
@@ -24,6 +31,6 @@
     <string name="first_judge_empty">The first judge must have a name.</string>
     <string name="second_judge_empty">The second judge must have a name.</string>
     <string name="third_judge_empty">The third judge must have a name.</string>
+    <string name="round_number">Round</string>
 
- <string name="round_number">Round</string>
 </resources>

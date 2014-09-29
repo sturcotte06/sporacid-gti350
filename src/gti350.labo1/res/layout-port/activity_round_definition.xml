@@ -10,242 +10,168 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gti350.labo1.RoundDefinitionActivity" >
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/button_leave"
-        android:contentDescription="Quit" />
-
     <LinearLayout
-        android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="45"
-            android:text="Disqualification"
-            android:textColor="@color/text_black"
-            android:textColorLink="@color/text_white" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="40dp"
-            android:layout_weight="27"
-            android:background="@drawable/button_score"
-            android:contentDescription="Classement" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayout1"
-            android:layout_alignLeft="@+id/linearLayout2"
-            android:layout_weight="1"
-            android:text="K.O"
-            android:textColor="@color/text_black"
-            android:textColorHint="@color/text_black"
-            android:textColorLink="@color/text_white" />
-
-        <Button
-            android:id="@+id/button1b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button1"
-            android:layout_alignBottom="@+id/button1"
-            android:layout_marginRight="19dp"
-            android:layout_toLeftOf="@+id/textView4"
-            android:layout_weight="1"
-            android:text="K.O.T."
-            android:textColor="@color/text_black"
-            android:textColorLink="@color/text_white" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button1b"
-            android:layout_alignBottom="@+id/button1b"
-            android:layout_alignRight="@+id/linearLayout1"
-            android:layout_weight="1"
-            android:text="Penalties"
-            android:textColor="@color/text_black"
-            android:textColorLink="@color/text_white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout3"
-        android:layout_alignRight="@+id/linearLayout3"
-        android:layout_marginRight="31dp"
-        android:layout_weight="1"
+        android:layout_above="@+id/layout_roundef_buttonbar1"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical" >
 
+        <!-- First judge -->
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_round_definition"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/linearLayout2"
-        android:layout_alignLeft="@+id/linearLayout3"
-        android:layout_marginBottom="38dp"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical"
-        android:textColor="@color/text_white" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/first_judge_label"
                 android:textColor="@color/text_white"
                 android:textColorLink="@android:color/white" />
 
-            <EditText
-                android:id="@+id/editText1a"
-                android:layout_width="95px"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Red"
-                android:inputType="number"
+            <ToggleButton
+                android:id="@+id/button_first_judge_red"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:textColor="@color/red_fighter"
-                android:textColorHint="@color/red_fighter" >
+                android:textOff="@string/red_fighter_short_label"
+                android:textOn="@string/red_fighter_short_label" />
 
-                <requestFocus />
-            </EditText>
-
-            <EditText
-                android:id="@+id/editText1b"
-                android:layout_width="95px"
+            <ToggleButton
+                android:id="@+id/button_first_judge_blue"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Blue"
-                android:inputType="number"
+                android:layout_weight="1"
                 android:textColor="@color/blue_fighter"
-                android:textColorHint="@color/blue_fighter" />
+                android:textOff="@string/blue_fighter_short_label"
+                android:textOn="@string/blue_fighter_short_label" />
         </LinearLayout>
 
+        <!-- Second judge -->
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/second_judge_label"
                 android:textColor="@color/text_white"
                 android:textColorLink="@android:color/white" />
 
-            <EditText
-                android:id="@+id/editText2a"
-                android:layout_width="95px"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:ems="10"
-                android:hint="Red"
-                android:inputType="number"
+            <ToggleButton
+                android:id="@+id/button_second_judge_red"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:textColor="@color/red_fighter"
-                android:textColorHint="@color/red_fighter" />
+                android:textOff="@string/red_fighter_short_label"
+                android:textOn="@string/red_fighter_short_label" />
 
-            <EditText
-                android:id="@+id/editText2b"
-                android:layout_width="95px"
+            <ToggleButton
+                android:id="@+id/button_second_judge_blue"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:ems="10"
-                android:hint="Blue"
-                android:inputType="number"
+                android:layout_weight="1"
                 android:textColor="@color/blue_fighter"
-                android:textColorHint="@color/blue_fighter" />
+                android:textOff="@string/blue_fighter_short_label"
+                android:textOn="@string/blue_fighter_short_label" />
         </LinearLayout>
 
+        <!-- Third judge -->
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/third_judge_label"
                 android:textColor="@color/text_white"
                 android:textColorLink="@android:color/white" />
 
-            <EditText
-                android:id="@+id/editText3a"
-                android:layout_width="95px"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:ems="10"
-                android:hint="Red"
-                android:inputType="number"
+            <ToggleButton
+                android:id="@+id/button_third_judge_red"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:textColor="@color/red_fighter"
-                android:textColorHint="@color/red_fighter" />
+                android:textOff="@string/red_fighter_short_label"
+                android:textOn="@string/red_fighter_short_label" />
 
-            <EditText
-                android:id="@+id/editText3b"
-                android:layout_width="95px"
+            <ToggleButton
+                android:id="@+id/button_third_judge_blue"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:ems="10"
-                android:hint="Blue"
-                android:inputType="number"
+                android:layout_weight="1"
                 android:textColor="@color/blue_fighter"
-                android:textColorHint="@color/blue_fighter" />
+                android:textOff="@string/blue_fighter_short_label"
+                android:textOn="@string/blue_fighter_short_label" />
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layout_roundef_buttonbar2"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/linearLayout2"
-        android:layout_alignTop="@+id/imageButton1"
-        android:layout_weight="1"
-        android:text="@string/round_number"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/text_white"
-        android:textColorHint="@color/text_white" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button_disqualified"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_disqualified"
+            android:textColor="@color/text_white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_roundef_buttonbar1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_roundef_buttonbar2"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button_ko"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_ko"
+            android:textColor="@color/text_white" />
+
+        <Button
+            android:id="@+id/button_tko"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_tko"
+            android:textColor="@color/text_white" />
+
+        <Button
+            android:id="@+id/button_penalty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_penalty"
+            android:textColor="@color/text_white" />
+    </LinearLayout>
 
 </RelativeLayout>

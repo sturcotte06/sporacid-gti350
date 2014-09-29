@@ -107,20 +107,7 @@ public class Fight implements Parcelable {
 			throw new IllegalStateException("Cannot register a new round for this fight.");
 		}
 
-		if (judgeScore1 == null) {
-			throw new IllegalArgumentException("judgeScore1 cannot be null.");
-		}
-
-		if (judgeScore2 == null) {
-			throw new IllegalArgumentException("judgeScore2 cannot be null.");
-		}
-
-		if (judgeScore3 == null) {
-			throw new IllegalArgumentException("judgeScore3 cannot be null.");
-		}
-
-		Round newRound = new Round();
-		this.rounds.add(newRound);
+		this.rounds.add(new Round(judgeScore1, judgeScore2, judgeScore3));
 	}
 
 	@Override
@@ -136,5 +123,47 @@ public class Fight implements Parcelable {
 		dest.writeParcelable(judge2, 0);
 		dest.writeParcelable(judge3, 0);
 		dest.writeTypedList(rounds);
+	}
+
+	/**
+	 * @return the judge1
+	 */
+	public Judge getJudge1() {
+		return judge1;
+	}
+
+	/**
+	 * @return the judge2
+	 */
+	public Judge getJudge2() {
+		return judge2;
+	}
+
+	/**
+	 * @return the judge3
+	 */
+	public Judge getJudge3() {
+		return judge3;
+	}
+
+	/**
+	 * @return the fighter1
+	 */
+	public Fighter getFighter1() {
+		return fighter1;
+	}
+
+	/**
+	 * @return the fighter2
+	 */
+	public Fighter getFighter2() {
+		return fighter2;
+	}
+
+	/**
+	 * @return the rounds
+	 */
+	public List<Round> getRounds() {
+		return rounds;
 	}
 }
