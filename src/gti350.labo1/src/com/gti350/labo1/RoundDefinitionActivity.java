@@ -229,9 +229,12 @@ public class RoundDefinitionActivity extends BaseActivity {
 		@Override
 		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
 			Intent i;
-			if (roundCounter == 0) {
+			if (roundCounter == 1) {
 				// User wants to go back to judge definition.
 				i = new Intent(RoundDefinitionActivity.this, JudgeDefinitionActivity.class);
+
+				i.putExtra(BaseActivity.RedFighterKey, fight.getFighter1());
+				i.putExtra(BaseActivity.BlueFighterKey, fight.getFighter2());
 				i.putExtra(BaseActivity.FirstJudgeKey, fight.getJudge1());
 				i.putExtra(BaseActivity.SecondJudgeKey, fight.getJudge2());
 				i.putExtra(BaseActivity.ThirdJudgeKey, fight.getJudge3());
