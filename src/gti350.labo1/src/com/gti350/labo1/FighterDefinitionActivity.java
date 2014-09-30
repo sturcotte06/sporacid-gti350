@@ -68,7 +68,7 @@ public class FighterDefinitionActivity extends BaseActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return gestureDetector.onTouchEvent(event) && super.onTouchEvent(event);
+		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
 	}
 
 	@Override

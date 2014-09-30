@@ -5,7 +5,9 @@ import java.util.Collection;
 import com.gti350.labo1.listeners.SwipeGestureListener;
 import com.gti350.labo1.listeners.SwipeGestureListener.IOnSwipeListener;
 import com.gti350.labo1.models.Fight;
+import com.gti350.labo1.models.JudgeScore;
 import com.gti350.labo1.models.Round;
+import com.gti350.labo1.models.Score;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ToggleButton;
+import android.widget.TextView;
 
 /**
  * @author Laurianne Michaud, Alexandre Billot, Simon Turcotte-Langevin
@@ -69,6 +72,9 @@ public class RoundDefinitionActivity extends BaseActivity {
 		this.redFighterThirdJudgeButton = (ToggleButton) findViewById(R.id.button_third_judge_red);
 		this.blueFighterThirdJudgeButton = (ToggleButton) findViewById(R.id.button_third_judge_blue);
 
+		// Sync labels to reflect the names of fighters and judges.
+		synchronizeLabels();
+
 		// Bind on checked event handler for each of the toggle button pairs.
 		this.redFighterFirstJudgeButton.setOnCheckedChangeListener(new OnFighterToggleButtonCheckedChanged(this.blueFighterFirstJudgeButton));
 		this.blueFighterFirstJudgeButton.setOnCheckedChangeListener(new OnFighterToggleButtonCheckedChanged(this.redFighterFirstJudgeButton));
@@ -80,7 +86,8 @@ public class RoundDefinitionActivity extends BaseActivity {
 		this.blueFighterThirdJudgeButton.setOnCheckedChangeListener(new OnFighterToggleButtonCheckedChanged(this.redFighterThirdJudgeButton));
 
 		// Create the listener for swiping.
-		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new OnPreviousSwipeListener(), new OnNextSwipeListener());
+		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new OnPreviousSwipeListener(), new OnNextSwipeListener(), null,
+				new OnPartialResultSwipeListener());
 		this.gestureDetector = new GestureDetectorCompat(this, swipeGestureListener);
 	}
 
@@ -110,6 +117,11 @@ public class RoundDefinitionActivity extends BaseActivity {
 		Log.i(LoggingTag, "Configuration change detected.");
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
+	}
+
 	/**
 	 * Updates the title with the number of the current round.
 	 */
@@ -131,8 +143,46 @@ public class RoundDefinitionActivity extends BaseActivity {
 				titleBuilder.append("th ");
 				break;
 		}
+
 		titleBuilder.append(getTitle());
 		setTitle(titleBuilder);
+	}
+
+	/**
+	 * Synchronizes judges and fighters labels so they reflect the fight object
+	 * content.
+	 */
+	private void synchronizeLabels() {
+		// Update judge labels.
+		((TextView) findViewById(R.id.label_first_judge)).setText(fight.getJudge1().getName());
+		((TextView) findViewById(R.id.label_second_judge)).setText(fight.getJudge2().getName());
+		((TextView) findViewById(R.id.label_third_judge)).setText(fight.getJudge3().getName());
+
+		// Update red fighter buttons.
+		this.redFighterFirstJudgeButton.setTextOn(fight.getFighter1().getName());
+		this.redFighterFirstJudgeButton.setTextOff(fight.getFighter1().getName());
+		this.redFighterSecondJudgeButton.setTextOn(fight.getFighter1().getName());
+		this.redFighterSecondJudgeButton.setTextOff(fight.getFighter1().getName());
+		this.redFighterThirdJudgeButton.setTextOn(fight.getFighter1().getName());
+		this.redFighterThirdJudgeButton.setTextOff(fight.getFighter1().getName());
+
+		// Force private call to syncTextState().
+		this.redFighterFirstJudgeButton.setChecked(this.redFighterFirstJudgeButton.isChecked());
+		this.redFighterSecondJudgeButton.setChecked(this.redFighterSecondJudgeButton.isChecked());
+		this.redFighterThirdJudgeButton.setChecked(this.redFighterThirdJudgeButton.isChecked());
+
+		// Update blue fighter buttons.
+		this.blueFighterFirstJudgeButton.setTextOn(fight.getFighter2().getName());
+		this.blueFighterFirstJudgeButton.setTextOff(fight.getFighter2().getName());
+		this.blueFighterSecondJudgeButton.setTextOn(fight.getFighter2().getName());
+		this.blueFighterSecondJudgeButton.setTextOff(fight.getFighter2().getName());
+		this.blueFighterThirdJudgeButton.setTextOn(fight.getFighter2().getName());
+		this.blueFighterThirdJudgeButton.setTextOff(fight.getFighter2().getName());
+
+		// Force private call to syncTextState().
+		this.blueFighterFirstJudgeButton.setChecked(this.blueFighterFirstJudgeButton.isChecked());
+		this.blueFighterSecondJudgeButton.setChecked(this.blueFighterSecondJudgeButton.isChecked());
+		this.blueFighterThirdJudgeButton.setChecked(this.blueFighterThirdJudgeButton.isChecked());
 	}
 
 	/**
@@ -140,13 +190,16 @@ public class RoundDefinitionActivity extends BaseActivity {
 	 * @version 1.0
 	 */
 	private class OnFighterToggleButtonCheckedChanged implements OnCheckedChangeListener {
-		/** */
+		/**
+		 * The other fighter button that will be toggled at the same time as
+		 * this button.
+		 */
 		private CompoundButton otherFighterButton;
 
-		/** */
+		/** The color of the background when the button is checked. */
 		private int onColor;
 
-		/** */
+		/** The color of the background when the button is not checked. */
 		private int offColor;
 
 		public OnFighterToggleButtonCheckedChanged(CompoundButton otherFighterButton) {
@@ -175,11 +228,6 @@ public class RoundDefinitionActivity extends BaseActivity {
 	private class OnPreviousSwipeListener implements IOnSwipeListener {
 		@Override
 		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-			// Remove the last submmited round.
-			Collection<Round> submittedRounds = fight.getRounds();
-			submittedRounds.remove(submittedRounds.size() - 1);
-			roundCounter--;
-
 			Intent i;
 			if (roundCounter == 0) {
 				// User wants to go back to judge definition.
@@ -188,12 +236,18 @@ public class RoundDefinitionActivity extends BaseActivity {
 				i.putExtra(BaseActivity.SecondJudgeKey, fight.getJudge2());
 				i.putExtra(BaseActivity.ThirdJudgeKey, fight.getJudge3());
 			} else {
+				// Remove the last submmited round.
+				Collection<Round> submittedRounds = fight.getRounds();
+				submittedRounds.remove(submittedRounds.size() - 1);
+				roundCounter--;
+
 				// User wants to go back to the previous round definition.
 				i = new Intent(RoundDefinitionActivity.this, RoundDefinitionActivity.class);
 				i.putExtra(BaseActivity.FightKey, fight);
 				i.putExtra(BaseActivity.CurrentRoundCounterKey, roundCounter);
 			}
 
+			finish();
 			startActivity(i);
 			return true;
 		}
@@ -206,6 +260,46 @@ public class RoundDefinitionActivity extends BaseActivity {
 	private class OnNextSwipeListener implements IOnSwipeListener {
 		@Override
 		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+			// Set every judge scores based on toggle button selection.
+			// If red was selected, red has max pts, blue has min pts and
+			// vice-versa.
+			JudgeScore judgeScore1 = new JudgeScore(fight.getJudge1(), new Score(redFighterFirstJudgeButton.isChecked() ? Score.MaximumScore
+					: Score.MinimumInitialScore), new Score(redFighterFirstJudgeButton.isChecked() ? Score.MinimumInitialScore : Score.MaximumScore));
+			JudgeScore judgeScore2 = new JudgeScore(fight.getJudge2(), new Score(redFighterSecondJudgeButton.isChecked() ? Score.MaximumScore
+					: Score.MinimumInitialScore), new Score(redFighterSecondJudgeButton.isChecked() ? Score.MinimumInitialScore : Score.MaximumScore));
+			JudgeScore judgeScore3 = new JudgeScore(fight.getJudge3(), new Score(redFighterThirdJudgeButton.isChecked() ? Score.MaximumScore
+					: Score.MinimumInitialScore), new Score(redFighterThirdJudgeButton.isChecked() ? Score.MinimumInitialScore : Score.MaximumScore));
+
+			// Register the new round.
+			fight.registerRound(judgeScore1, judgeScore2, judgeScore3);
+			roundCounter++;
+
+			// Go to the next round definition, unless we currently did the last
+			// round, in which case we'll go to the results.
+			Intent i = roundCounter > Fight.MaxRound ? new Intent(RoundDefinitionActivity.this, null) : new Intent(RoundDefinitionActivity.this,
+					RoundDefinitionActivity.class);
+			i.putExtra(BaseActivity.FightKey, fight);
+			i.putExtra(BaseActivity.CurrentRoundCounterKey, roundCounter);
+
+			finish();
+			startActivity(i);
+			return true;
+		}
+	}
+
+	/**
+	 * @author Laurianne Michaud, Alexandre Billot, Simon Turcotte-Langevin
+	 * @version 1.0
+	 */
+	public class OnPartialResultSwipeListener implements IOnSwipeListener {
+		@Override
+		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+			Intent i = new Intent(RoundDefinitionActivity.this, null); // ResultActivity.class
+			i.putExtra(BaseActivity.FightKey, fight);
+			i.putExtra(BaseActivity.CurrentRoundCounterKey, roundCounter);
+
+			finish();
+			startActivity(i);
 			return true;
 		}
 	}

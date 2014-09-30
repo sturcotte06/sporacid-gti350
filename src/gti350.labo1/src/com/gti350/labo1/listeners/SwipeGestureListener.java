@@ -59,7 +59,8 @@ public class SwipeGestureListener extends GestureDetector.SimpleOnGestureListene
 	 *            The swipe listener for a swipe that happened from top to
 	 *            bottom.
 	 */
-	public SwipeGestureListener(IOnSwipeListener leftToRightListener, IOnSwipeListener rightToLeftListener, IOnSwipeListener bottomToTopListener, IOnSwipeListener topToBottomListener) {
+	public SwipeGestureListener(IOnSwipeListener leftToRightListener, IOnSwipeListener rightToLeftListener, IOnSwipeListener bottomToTopListener,
+			IOnSwipeListener topToBottomListener) {
 		this.leftToRightListener = leftToRightListener;
 		this.rightToLeftListener = rightToLeftListener;
 		this.bottomToTopListener = bottomToTopListener;

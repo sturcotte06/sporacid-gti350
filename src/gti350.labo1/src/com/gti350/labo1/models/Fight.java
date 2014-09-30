@@ -15,7 +15,7 @@ import android.os.Parcelable;
  */
 public class Fight implements Parcelable {
 	/** */
-	private static final int MaxRound = 12;
+	public static final int MaxRound = 12;
 
 	/** Creator object for the parcelable implementation. */
 	public static final Parcelable.Creator<Fight> CREATOR = ParcelableHelper.getDefaultCreator(Fight.class);

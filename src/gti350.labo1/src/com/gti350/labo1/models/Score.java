@@ -19,11 +19,11 @@ public class Score implements Parcelable {
 	public static final Parcelable.Creator<Score> CREATOR = ParcelableHelper.getDefaultCreator(Score.class);
 
 	/** The minimum effective score for a round. */
-	private static final int MinimumEffectiveScore = 0;
+	public static final int MinimumEffectiveScore = 0;
 	/** The minimum initial score for a round. */
-	private static final int MinimumInitialScore = 9;
+	public static final int MinimumInitialScore = 9;
 	/** The maximum score for a round. */
-	private static final int MaximumScore = 10;
+	public static final int MaximumScore = 10;
 
 	/** The initial value for the score. */
 	private final int initialScore;

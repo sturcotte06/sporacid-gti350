@@ -97,7 +97,7 @@ public class JudgeDefinitionActivity extends BaseActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return this.gestureDetector.onTouchEvent(event) && super.onTouchEvent(event);
+		return this.gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
 	}
 
 	@Override
@@ -147,8 +147,8 @@ public class JudgeDefinitionActivity extends BaseActivity {
 
 				Intent i = new Intent(JudgeDefinitionActivity.this, RoundDefinitionActivity.class);
 				Judge firstJudge = new Judge(firstJudgeName.toString());
-				Judge secondJudge = new Judge(firstJudgeName.toString());
-				Judge thirdJudge = new Judge(firstJudgeName.toString());
+				Judge secondJudge = new Judge(secondJudgeName.toString());
+				Judge thirdJudge = new Judge(thirdJudgeName.toString());
 
 				Fight fight = new Fight(redFighter, blueFighter, firstJudge, secondJudge, thirdJudge);
 				i.putExtra(BaseActivity.FightKey, fight);
