@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.gti350.labo1.RoundDefinitionActivity" >
+
+    <item
+        android:id="@+id/action_ko"
+        android:orderInCategory="1"
+        android:title="@string/action_ko"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_tko"
+        android:orderInCategory="2"
+        android:title="@string/action_tko"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_penalty"
+        android:orderInCategory="3"
+        android:title="@string/action_penalty"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_disqualify"
+        android:orderInCategory="4"
+        android:title="@string/action_disqualify"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_back_to_main"
+        android:orderInCategory="5"
+        android:title="@string/action_back_to_main"
+        app:showAsAction="never"/>
+
+</menu>
