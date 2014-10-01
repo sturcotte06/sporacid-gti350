@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/layout_roundef_buttonbar1"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:orientation="vertical" >
 
@@ -135,52 +135,57 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_roundef_buttonbar2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
+    <!-- <LinearLayout -->
+    <!-- android:id="@+id/layout_roundef_buttonbar2" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignParentBottom="true" -->
+    <!-- android:orientation="horizontal" > -->
 
-        <Button
-            android:id="@+id/button_disqualified"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/action_disqualified"
-            android:textColor="@color/text_white" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_roundef_buttonbar1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/layout_roundef_buttonbar2"
-        android:orientation="horizontal" >
+    <!-- <Button -->
+    <!-- android:id="@+id/button_disqualified" -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:text="@string/action_disqualified" -->
+    <!-- android:textColor="@color/text_white" /> -->
+    <!-- </LinearLayout> -->
 
-        <Button
-            android:id="@+id/button_ko"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/action_ko"
-            android:textColor="@color/text_white" />
 
-        <Button
-            android:id="@+id/button_tko"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/action_tko"
-            android:textColor="@color/text_white" />
+    <!-- <LinearLayout -->
+    <!-- android:id="@+id/layout_roundef_buttonbar1" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_above="@+id/layout_roundef_buttonbar2" -->
+    <!-- android:orientation="horizontal" > -->
 
-        <Button
-            android:id="@+id/button_penalty"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/action_penalty"
-            android:textColor="@color/text_white" />
-    </LinearLayout>
+
+    <!-- <Button -->
+    <!-- android:id="@+id/button_ko" -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:text="@string/action_ko" -->
+    <!-- android:textColor="@color/text_white" /> -->
+
+
+    <!-- <Button -->
+    <!-- android:id="@+id/button_tko" -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:text="@string/action_tko" -->
+    <!-- android:textColor="@color/text_white" /> -->
+
+
+    <!-- <Button -->
+    <!-- android:id="@+id/button_penalty" -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:text="@string/action_penalty" -->
+    <!-- android:textColor="@color/text_white" /> -->
+    <!-- </LinearLayout> -->
 
 </RelativeLayout>

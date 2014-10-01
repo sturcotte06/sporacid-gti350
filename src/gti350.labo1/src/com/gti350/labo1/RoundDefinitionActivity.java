@@ -1,6 +1,6 @@
 package com.gti350.labo1;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.gti350.labo1.listeners.SwipeGestureListener;
 import com.gti350.labo1.listeners.SwipeGestureListener.IOnSwipeListener;
@@ -10,7 +10,6 @@ import com.gti350.labo1.models.Round;
 import com.gti350.labo1.models.Score;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
@@ -51,6 +50,9 @@ public class RoundDefinitionActivity extends BaseActivity {
 
 		// Get extras from the intent.
 		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			throw new IllegalStateException("Bundle did not contain any extra data. Cannot proceed with judge definition activity.");
+		}
 
 		this.fight = (Fight) extras.get(BaseActivity.FightKey);
 		if (this.fight == null) {
@@ -85,6 +87,25 @@ public class RoundDefinitionActivity extends BaseActivity {
 		this.redFighterThirdJudgeButton.setOnCheckedChangeListener(new OnFighterToggleButtonCheckedChanged(this.blueFighterThirdJudgeButton));
 		this.blueFighterThirdJudgeButton.setOnCheckedChangeListener(new OnFighterToggleButtonCheckedChanged(this.redFighterThirdJudgeButton));
 
+		// Check if a previous round object was serialized.
+		// If so, use its state to repopulate this activity.
+		Round previousRound = (Round) extras.get(BaseActivity.PreviousRoundKey);
+		if (previousRound != null) {
+			boolean firstJudgeFavorsRed = previousRound.getJudgeScore1().getScoreFighter1().getInitialScore() > previousRound.getJudgeScore1()
+					.getScoreFighter2().getInitialScore();
+			boolean secondJudgeFavorsRed = previousRound.getJudgeScore2().getScoreFighter1().getInitialScore() > previousRound.getJudgeScore2()
+					.getScoreFighter2().getInitialScore();
+			boolean thirdJudgeFavorsRed = previousRound.getJudgeScore3().getScoreFighter1().getInitialScore() > previousRound.getJudgeScore3()
+					.getScoreFighter2().getInitialScore();
+
+			this.redFighterFirstJudgeButton.setChecked(firstJudgeFavorsRed);
+			this.blueFighterFirstJudgeButton.setChecked(!firstJudgeFavorsRed);
+			this.redFighterSecondJudgeButton.setChecked(secondJudgeFavorsRed);
+			this.blueFighterSecondJudgeButton.setChecked(!secondJudgeFavorsRed);
+			this.redFighterThirdJudgeButton.setChecked(thirdJudgeFavorsRed);
+			this.blueFighterThirdJudgeButton.setChecked(!thirdJudgeFavorsRed);
+		}
+
 		// Create the listener for swiping.
 		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new OnPreviousSwipeListener(), new OnNextSwipeListener(), null,
 				new OnPartialResultSwipeListener());
@@ -94,31 +115,44 @@ public class RoundDefinitionActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.round_definition, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean handled = false;
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (id == R.id.action_ko) {
+			handled = true;
+			displayAlert("Ko", "Ko");
+		} else if (id == R.id.action_tko) {
+			handled = true;
+			displayAlert("Tko", "Tko");
+		} else if (id == R.id.action_disqualify) {
+			handled = true;
+			displayAlert("Disqualify", "Disqualify");
+		} else if (id == R.id.action_penalty) {
+			handled = true;
+			displayAlert("Penalty", "Penalty");
 		}
 
-		return super.onOptionsItemSelected(item);
+		return handled || super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onConfigurationChanged(Configuration configure) {
-		super.onConfigurationChanged(configure);
-		Log.i(LoggingTag, "Configuration change detected.");
-	}
+	// @Override
+	// public void onConfigurationChanged(Configuration configure) {
+	// super.onConfigurationChanged(configure);
+	// Log.i(LoggingTag, "Configuration change detected.");
+	// }
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		// Check if the swipe detector can handle the event.
+		// Else, pass the event along to the super class.
 		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
 	}
 
@@ -214,9 +248,16 @@ public class RoundDefinitionActivity extends BaseActivity {
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			// Toggle the other fighter's button.
-			this.otherFighterButton.setChecked(!isChecked);
-			buttonView.setBackgroundColor(isChecked ? onColor : offColor);
+			if (isChecked && otherFighterButton.isChecked()) {
+				// Toggle the other fighter's button.
+				this.otherFighterButton.setChecked(false);
+				this.otherFighterButton.setBackgroundColor(offColor);
+
+				buttonView.setBackgroundColor(onColor);
+			} else if (!otherFighterButton.isChecked()) {
+				// Current button was already checked.
+				buttonView.setChecked(true);
+			}
 		}
 	}
 
@@ -240,13 +281,14 @@ public class RoundDefinitionActivity extends BaseActivity {
 				i.putExtra(BaseActivity.ThirdJudgeKey, fight.getJudge3());
 			} else {
 				// Remove the last submmited round.
-				Collection<Round> submittedRounds = fight.getRounds();
-				submittedRounds.remove(submittedRounds.size() - 1);
+				List<Round> submittedRounds = fight.getRounds();
+				Round previousRound = submittedRounds.remove(submittedRounds.size() - 1);
 				roundCounter--;
 
 				// User wants to go back to the previous round definition.
 				i = new Intent(RoundDefinitionActivity.this, RoundDefinitionActivity.class);
 				i.putExtra(BaseActivity.FightKey, fight);
+				i.putExtra(BaseActivity.PreviousRoundKey, previousRound);
 				i.putExtra(BaseActivity.CurrentRoundCounterKey, roundCounter);
 			}
 

@@ -51,6 +51,12 @@ public abstract class BaseActivity extends ActionBarActivity {
 	 * into an intent.
 	 */
 	protected static final String CurrentRoundCounterKey = "RoundDefinition_CurrentRoundCounter";
+	
+	/**
+	 * Key to be used whenever we want to serialize the previous round
+	 * into an intent.
+	 */
+	protected static final String PreviousRoundKey = "RoundDefinition_PreviousRoundValues";
 
 	/**
 	 * Displays an alert for the validations messages in parameter.
@@ -81,6 +87,28 @@ public abstract class BaseActivity extends ActionBarActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
 		builder.setTitle(R.string.title_alert_validation);
 		builder.setMessage(validationMessage);
+		builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
+
+		builder.create().show();
+	}
+
+	/**
+	 * Displays an alert with title and message values passed in parameter.
+	 * 
+	 * @param title
+	 *            The title of the alert.
+	 * @param message
+	 *            The message to show.
+	 */
+	protected void displayAlert(CharSequence title, CharSequence message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+		builder.setTitle(title);
+		builder.setMessage(message);
 		builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {

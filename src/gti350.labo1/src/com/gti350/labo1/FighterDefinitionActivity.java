@@ -5,13 +5,10 @@ import com.gti350.labo1.listeners.SwipeGestureListener.IOnSwipeListener;
 import com.gti350.labo1.models.Fighter;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.text.Editable;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
@@ -37,7 +34,7 @@ public class FighterDefinitionActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fighter_definition);
-
+		
 		// Cache useful controls.
 		redFighterTextbox = (EditText) findViewById(R.id.textbox_red_fighter);
 		blueFighterTextbox = (EditText) findViewById(R.id.textbox_blue_fighter);
@@ -45,36 +42,31 @@ public class FighterDefinitionActivity extends BaseActivity {
 		// Create the listener for swiping.
 		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new OnPreviousSwipeListener(), new OnNextSwipeListener());
 		gestureDetector = new GestureDetectorCompat(this, swipeGestureListener);
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.fighter_definition, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		// Get the extras from the intent.
+		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			return;
 		}
-		return super.onOptionsItemSelected(item);
+		
+		// Check if fighters object are already serialized.
+		// If so, use their state to repopulate this activity.
+		Fighter redFighter = (Fighter) extras.get(BaseActivity.RedFighterKey);
+		if (redFighter != null) {
+			redFighterTextbox.setText(redFighter.getName());
+		}
+		
+		Fighter blueFighter = (Fighter) extras.get(BaseActivity.BlueFighterKey);
+		if (blueFighter != null) {
+			blueFighterTextbox.setText(blueFighter.getName());
+		}		
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		// Check if the swipe detector can handle the event.
+		// Else, pass the event along to the super class.
 		return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration configure) {
-		super.onConfigurationChanged(configure);
-		Log.i(LoggingTag, "Configuration change detected.");
 	}
 
 	/**
@@ -85,8 +77,9 @@ public class FighterDefinitionActivity extends BaseActivity {
 		@Override
 		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
 			Intent i = new Intent(FighterDefinitionActivity.this, MainActivity.class);
-			startActivity(i);
 
+			finish();
+			startActivity(i);
 			return true;
 		}
 	}
@@ -118,6 +111,7 @@ public class FighterDefinitionActivity extends BaseActivity {
 				i.putExtra(BaseActivity.BlueFighterKey, blueFighter);
 				Log.i(LoggingTag, "Serialized blue fighter.");
 
+				finish();
 				startActivity(i);
 				return true;
 			} else {

@@ -7,13 +7,10 @@ import com.gti350.labo1.models.Fighter;
 import com.gti350.labo1.models.Judge;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.text.Editable;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
@@ -50,6 +47,10 @@ public class JudgeDefinitionActivity extends BaseActivity {
 		setContentView(R.layout.activity_judge_definition);
 
 		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			throw new IllegalStateException("Bundle did not contain any extra data. Cannot proceed with judge definition activity.");
+		}
+
 		Log.i(LoggingTag, "Retrieved extras from intent.");
 
 		this.redFighter = (Fighter) extras.get(BaseActivity.RedFighterKey);
@@ -71,39 +72,33 @@ public class JudgeDefinitionActivity extends BaseActivity {
 		secondJudgeTextbox = (EditText) findViewById(R.id.textbox_second_judge);
 		thirdJudgeTextbox = (EditText) findViewById(R.id.textbox_third_judge);
 
+		// Check if judge object are already serialized.
+		// If so, use their state to repopulate this activity.
+		Judge firstJudge = (Judge) extras.get(BaseActivity.FirstJudgeKey);
+		if (firstJudge != null) {
+			firstJudgeTextbox.setText(firstJudge.getName());
+		}
+
+		Judge secondJudge = (Judge) extras.get(BaseActivity.SecondJudgeKey);
+		if (secondJudge != null) {
+			secondJudgeTextbox.setText(secondJudge.getName());
+		}
+
+		Judge thirdJudge = (Judge) extras.get(BaseActivity.ThirdJudgeKey);
+		if (thirdJudge != null) {
+			thirdJudgeTextbox.setText(thirdJudge.getName());
+		}
+
 		// Create the listener for swiping.
 		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new OnPreviousSwipeListener(), new OnNextSwipeListener());
 		this.gestureDetector = new GestureDetectorCompat(this, swipeGestureListener);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.judge_definition, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		// Check if the swipe detector can handle the event.
+		// Else, pass the event along to the super class.
 		return this.gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration configure) {
-		super.onConfigurationChanged(configure);
-		Log.i(LoggingTag, "Configuration change detected.");
 	}
 
 	/**

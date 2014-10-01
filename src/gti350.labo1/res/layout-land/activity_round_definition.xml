@@ -161,43 +161,43 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/layout_round_definition"
-        android:orientation="horizontal" >
+<!--     <LinearLayout -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_above="@+id/layout_round_definition" -->
+<!--         android:orientation="horizontal" > -->
 
-        <Button
-            android:id="@+id/button_disqualified"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
-            android:text="@string/action_disqualified"
-            android:textColor="@color/text_white" />
+<!--         <Button -->
+<!--             android:id="@+id/button_disqualified" -->
+<!--             android:layout_width="0dp" -->
+<!--             android:layout_height="fill_parent" -->
+<!--             android:layout_weight="2" -->
+<!--             android:text="@string/action_disqualified" -->
+<!--             android:textColor="@color/text_white" /> -->
 
-        <Button
-            android:id="@+id/button_ko"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/action_ko"
-            android:textColor="@color/text_white" />
+<!--         <Button -->
+<!--             android:id="@+id/button_ko" -->
+<!--             android:layout_width="0dp" -->
+<!--             android:layout_height="fill_parent" -->
+<!--             android:layout_weight="1" -->
+<!--             android:text="@string/action_ko" -->
+<!--             android:textColor="@color/text_white" /> -->
 
-        <Button
-            android:id="@+id/button_tko"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/action_tko"
-            android:textColor="@color/text_white" />
+<!--         <Button -->
+<!--             android:id="@+id/button_tko" -->
+<!--             android:layout_width="0dp" -->
+<!--             android:layout_height="fill_parent" -->
+<!--             android:layout_weight="1" -->
+<!--             android:text="@string/action_tko" -->
+<!--             android:textColor="@color/text_white" /> -->
 
-        <Button
-            android:id="@+id/button_penalty"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/action_penalty"
-            android:textColor="@color/text_white" />
-    </LinearLayout>
+<!--         <Button -->
+<!--             android:id="@+id/button_penalty" -->
+<!--             android:layout_width="0dp" -->
+<!--             android:layout_height="fill_parent" -->
+<!--             android:layout_weight="1" -->
+<!--             android:text="@string/action_penalty" -->
+<!--             android:textColor="@color/text_white" /> -->
+<!--     </LinearLayout> -->
 
 </RelativeLayout>

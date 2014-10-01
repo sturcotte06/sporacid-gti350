@@ -11,13 +11,13 @@ public class Round implements Parcelable {
 	public static final Parcelable.Creator<Round> CREATOR = ParcelableHelper.getDefaultCreator(Round.class);
 
 	/** The score given to each fighters by the first judge. */
-	private JudgeScore judgeScore1;
+	private final JudgeScore judgeScore1;
 
 	/** The score given to each fighters by the second judge. */
-	private JudgeScore judgeScore2;
+	private final JudgeScore judgeScore2;
 
 	/** The score given to each fighters by the third judge. */
-	private JudgeScore judgeScore3;
+	private final JudgeScore judgeScore3;
 
 	/**
 	 * Constructor.
@@ -74,5 +74,26 @@ public class Round implements Parcelable {
 		dest.writeParcelable(this.judgeScore1, flags);
 		dest.writeParcelable(this.judgeScore2, flags);
 		dest.writeParcelable(this.judgeScore3, flags);
+	}
+
+	/**
+	 * @return the judgeScore1
+	 */
+	public JudgeScore getJudgeScore1() {
+		return judgeScore1;
+	}
+
+	/**
+	 * @return the judgeScore2
+	 */
+	public JudgeScore getJudgeScore2() {
+		return judgeScore2;
+	}
+
+	/**
+	 * @return the judgeScore3
+	 */
+	public JudgeScore getJudgeScore3() {
+		return judgeScore3;
 	}
 }

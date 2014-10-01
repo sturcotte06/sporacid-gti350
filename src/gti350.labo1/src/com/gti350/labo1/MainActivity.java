@@ -1,13 +1,7 @@
 package com.gti350.labo1;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -33,32 +27,6 @@ public class MainActivity extends BaseActivity {
 		startFightButton.setOnClickListener(new OnStartFightButtonClicked());
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration configure) {
-		super.onConfigurationChanged(configure);
-		Log.i(LoggingTag, "Configuration change detected.");
-	}
-
 	/**
 	 * @author Laurianne Michaud, Alexandre Billot, Simon Turcotte-Langevin
 	 * @version 1.0
@@ -66,17 +34,7 @@ public class MainActivity extends BaseActivity {
 	private class OnSettingsButtonClicked implements View.OnClickListener {
 		@Override
 		public void onClick(View v) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-			builder.setTitle("Unimplemented");
-			builder.setMessage("Not implemented.");
-			builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss();
-				}
-			});
-
-			builder.create().show();
+			displayAlert("Unimplemented", "Not implemented.");
 		}
 	}
 
@@ -89,9 +47,8 @@ public class MainActivity extends BaseActivity {
 		public void onClick(View v) {
 			// Start the fighter's definition activity.
 			Intent i = new Intent(MainActivity.this, FighterDefinitionActivity.class);
-			startActivity(i);
 
-			// close this activity
+			startActivity(i);
 			finish();
 		}
 	}
