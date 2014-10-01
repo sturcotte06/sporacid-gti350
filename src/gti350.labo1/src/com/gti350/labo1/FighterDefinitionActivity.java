@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.EditText;
+import android.widget.Scroller;
 
 /**
  * @author Laurianne Michaud, Alexandre Billot, Simon Turcotte-Langevin
@@ -24,6 +25,8 @@ public class FighterDefinitionActivity extends BaseActivity {
 	/** */
 	private GestureDetectorCompat gestureDetector;
 
+	private Scroller scroller;
+
 	/** */
 	private EditText redFighterTextbox;
 
@@ -34,7 +37,7 @@ public class FighterDefinitionActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fighter_definition);
-		
+
 		// Cache useful controls.
 		redFighterTextbox = (EditText) findViewById(R.id.textbox_red_fighter);
 		blueFighterTextbox = (EditText) findViewById(R.id.textbox_blue_fighter);
@@ -42,26 +45,27 @@ public class FighterDefinitionActivity extends BaseActivity {
 		// Create the listener for swiping.
 		SwipeGestureListener swipeGestureListener = new SwipeGestureListener(new OnPreviousSwipeListener(), new OnNextSwipeListener());
 		gestureDetector = new GestureDetectorCompat(this, swipeGestureListener);
+		scroller = new Scroller(FighterDefinitionActivity.this);
 
 		// Get the extras from the intent.
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			return;
 		}
-		
+
 		// Check if fighters object are already serialized.
 		// If so, use their state to repopulate this activity.
 		Fighter redFighter = (Fighter) extras.get(BaseActivity.RedFighterKey);
 		if (redFighter != null) {
 			redFighterTextbox.setText(redFighter.getName());
 		}
-		
+
 		Fighter blueFighter = (Fighter) extras.get(BaseActivity.BlueFighterKey);
 		if (blueFighter != null) {
 			blueFighterTextbox.setText(blueFighter.getName());
-		}		
+		}
 	}
-
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// Check if the swipe detector can handle the event.

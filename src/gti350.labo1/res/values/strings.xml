@@ -17,6 +17,11 @@
     <string name="title_activity_results">Results</string>
     <string name="title_activity_round_definition">Round Definition</string>
     <string name="title_alert_validation">Validation Alert</string>
+    <string name="title_alert_ko">KO a fighter</string>
+    <string name="title_alert_tko">TKO a fighter</string>
+    <string name="title_alert_disqualify">Disqualify a fighter</string>
+    <string name="title_alert_penalty">Give penalty</string>
+    <string name="title_round_advantage">Advantage to</string>
     <!-- Labels -->
     <string name="red_fighter_label">Red Fighter</string>
     <string name="red_fighter_short_label">Red</string>

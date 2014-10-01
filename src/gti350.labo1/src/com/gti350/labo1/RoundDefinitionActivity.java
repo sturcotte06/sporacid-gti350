@@ -8,7 +8,11 @@ import com.gti350.labo1.models.Fight;
 import com.gti350.labo1.models.JudgeScore;
 import com.gti350.labo1.models.Round;
 import com.gti350.labo1.models.Score;
+import com.gti350.labo1.models.WinMethod;
+import com.gti350.labo1.models.Winner;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
@@ -126,15 +130,39 @@ public class RoundDefinitionActivity extends BaseActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_ko) {
+		if (id == R.id.action_ko || id == R.id.action_disqualify || id == R.id.action_tko) {
 			handled = true;
-			displayAlert("Ko", "Ko");
-		} else if (id == R.id.action_tko) {
-			handled = true;
-			displayAlert("Tko", "Tko");
-		} else if (id == R.id.action_disqualify) {
-			handled = true;
-			displayAlert("Disqualify", "Disqualify");
+
+			final String title;
+			final WinMethod winMethod;
+			if (id == R.id.action_ko) {
+				winMethod = WinMethod.Ko;
+				title = getString(R.string.title_alert_ko);
+			} else if (id == R.id.action_tko) {
+				winMethod = WinMethod.Tko;
+				title = getString(R.string.title_alert_tko);
+			} else {
+				winMethod = WinMethod.Disqualification;
+				title = getString(R.string.title_alert_disqualify);
+			}
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(RoundDefinitionActivity.this);
+			builder.setTitle(title)
+			.setNegativeButton(this.fight.getFighter1().getName(), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					Winner winner = new Winner(fight.getFighter2(), winMethod);
+					fight.declareWinner(winner);
+					dialog.dismiss();
+				}
+			}).setPositiveButton(this.fight.getFighter2().getName(), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					Winner winner = new Winner(fight.getFighter1(), winMethod);
+					fight.declareWinner(winner);
+					dialog.dismiss();
+				}
+			}).create().show();
 		} else if (id == R.id.action_penalty) {
 			handled = true;
 			displayAlert("Penalty", "Penalty");

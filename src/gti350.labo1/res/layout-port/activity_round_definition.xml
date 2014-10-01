@@ -17,6 +17,30 @@
         android:layout_marginBottom="10dp"
         android:orientation="vertical" >
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/title_round_advantage"
+                android:textColor="@color/text_white"
+                android:textColorLink="@android:color/white" />
+        </LinearLayout>
+
         <!-- First judge -->
 
         <LinearLayout
@@ -29,6 +53,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="@string/first_judge_label"
                 android:textColor="@color/text_white"
                 android:textColorLink="@android:color/white" />
@@ -41,6 +67,8 @@
                 android:layout_weight="1"
                 android:background="@color/toggle_button_on"
                 android:checked="true"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/red_fighter"
                 android:textOff="@string/red_fighter_short_label"
                 android:textOn="@string/red_fighter_short_label" />
@@ -51,6 +79,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/blue_fighter"
                 android:textOff="@string/blue_fighter_short_label"
                 android:textOn="@string/blue_fighter_short_label" />
@@ -68,6 +98,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="@string/second_judge_label"
                 android:textColor="@color/text_white"
                 android:textColorLink="@android:color/white" />
@@ -80,6 +112,8 @@
                 android:layout_weight="1"
                 android:background="@color/toggle_button_on"
                 android:checked="true"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/red_fighter"
                 android:textOff="@string/red_fighter_short_label"
                 android:textOn="@string/red_fighter_short_label" />
@@ -90,6 +124,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/blue_fighter"
                 android:textOff="@string/blue_fighter_short_label"
                 android:textOn="@string/blue_fighter_short_label" />
@@ -107,6 +143,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="@string/third_judge_label"
                 android:textColor="@color/text_white"
                 android:textColorLink="@android:color/white" />
@@ -119,6 +157,8 @@
                 android:layout_weight="1"
                 android:background="@color/toggle_button_on"
                 android:checked="true"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/red_fighter"
                 android:textOff="@string/red_fighter_short_label"
                 android:textOn="@string/red_fighter_short_label" />
@@ -129,6 +169,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/blue_fighter"
                 android:textOff="@string/blue_fighter_short_label"
                 android:textOn="@string/blue_fighter_short_label" />

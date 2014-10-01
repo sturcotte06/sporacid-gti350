@@ -33,6 +33,9 @@ public class Fight implements Parcelable {
 	/** */
 	private final Fighter fighter2;
 
+	/** */
+	private Winner winner;
+
 	/**
 	 * 
 	 * @param fighter1
@@ -91,6 +94,7 @@ public class Fight implements Parcelable {
 		this.judge1 = src.readParcelable(classLoader);
 		this.judge2 = src.readParcelable(classLoader);
 		this.judge3 = src.readParcelable(classLoader);
+		this.winner = src.readParcelable(classLoader);
 
 		this.rounds = new ArrayList<>();
 		src.readTypedList(this.rounds, Round.CREATOR);
@@ -110,6 +114,22 @@ public class Fight implements Parcelable {
 		this.rounds.add(new Round(judgeScore1, judgeScore2, judgeScore3));
 	}
 
+	/**
+	 * 
+	 * @param winner
+	 */
+	public void declareWinner(Winner winner) {
+		if (winner == null) {
+			throw new IllegalArgumentException("winner cannot be null.");
+		}
+
+		if (this.winner != null) {
+			throw new IllegalStateException("winner cannot be set twice.");
+		}
+
+		this.winner = winner;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -117,11 +137,12 @@ public class Fight implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeParcelable(fighter1, 0);
-		dest.writeParcelable(fighter2, 0);
-		dest.writeParcelable(judge1, 0);
-		dest.writeParcelable(judge2, 0);
-		dest.writeParcelable(judge3, 0);
+		dest.writeParcelable(fighter1, flags);
+		dest.writeParcelable(fighter2, flags);
+		dest.writeParcelable(judge1, flags);
+		dest.writeParcelable(judge2, flags);
+		dest.writeParcelable(judge3, flags);
+		dest.writeParcelable(winner, flags);
 		dest.writeTypedList(rounds);
 	}
 
@@ -165,5 +186,12 @@ public class Fight implements Parcelable {
 	 */
 	public List<Round> getRounds() {
 		return rounds;
+	}
+
+	/**
+	 * @return the winner
+	 */
+	public Winner getWinner() {
+		return winner;
 	}
 }
