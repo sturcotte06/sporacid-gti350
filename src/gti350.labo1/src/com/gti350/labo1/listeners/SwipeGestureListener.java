@@ -71,30 +71,32 @@ public class SwipeGestureListener extends GestureDetector.SimpleOnGestureListene
 	public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
 		boolean flingHandled = false;
 
-		// Get then angle between the two velocities.
-		float velocityRelativeAngle = getVelocityRelativeAngle(velocityX, velocityY);
+		// Get then angle between the x-axis and the movement vector.
+		float dx = event2.getX() - event1.getX();
+		float dy = event2.getY() - event1.getY();
+		float relativeAngle = getNormalVectorsRelativeAngle(dx, dy);
 
-		if (velocityRelativeAngle < 45) {
+		if (relativeAngle < 45) {
 			// Swipe was either from left to right or right to left.
-			if (velocityX >= 0) {
+			if (dx >= 0) {
 				// Swiped from left to right.
 				flingHandled = leftToRightListener != null && leftToRightListener.onSwipe(event1, event2, velocityX, velocityY);
-				Log.i(LoggingTag, String.format("Left to right swipe detected. velocityX: %f, velocityY: %f.", velocityX, velocityY));
-			} else if (velocityX < 0) {
+				Log.i(LoggingTag, String.format("Left to right swipe detected. dx: %f, dy: %f.", dx, dy));
+			} else if (dx < 0) {
 				// Swiped from right to left.
 				flingHandled = rightToLeftListener != null && rightToLeftListener.onSwipe(event1, event2, velocityX, velocityY);
-				Log.i(LoggingTag, String.format("Right to left swipe detected. velocityX: %f, velocityY: %f.", velocityX, velocityY));
+				Log.i(LoggingTag, String.format("Right to left swipe detected. dx: %f, dy: %f.", dx, dy));
 			}
 		} else {
 			// Swipe was either from bottom to top or top to bottom.
-			if (velocityY >= 0) {
+			if (dy >= 0) {
 				// Swiped from bottom to top.
 				flingHandled = bottomToTopListener != null && bottomToTopListener.onSwipe(event1, event2, velocityX, velocityY);
-				Log.i(LoggingTag, String.format("Bottom to top swipe detected. velocityX: %f, velocityY: %f.", velocityX, velocityY));
-			} else if (velocityY < 0) {
+				Log.i(LoggingTag, String.format("Bottom to top swipe detected. dx: %f, dy: %f.", dx, dy));
+			} else if (dy < 0) {
 				// Swiped from top to bottom.
 				flingHandled = topToBottomListener != null && topToBottomListener.onSwipe(event1, event2, velocityX, velocityY);
-				Log.i(LoggingTag, String.format("Top to bottom swipe detected. velocityX: %f, velocityY: %f.", velocityX, velocityY));
+				Log.i(LoggingTag, String.format("Top to bottom swipe detected. dx: %f, dy: %f.", dx, dy));
 			}
 		}
 
@@ -102,57 +104,60 @@ public class SwipeGestureListener extends GestureDetector.SimpleOnGestureListene
 	}
 
 	/**
-	 * Return the relative angle between a velocity and the x axis.
+	 * Return the angle, relative to the positive x-axis, of a line that passes
+	 * by (0, 0) and (|dx|, |dy|). The angle is calculated counter clockwise
+	 * from positive x-axis, in degrees. The value can be between 0 and 90.
 	 * 
-	 * @param velocityX
-	 *            The velocity along the x axis.
-	 * @param velocityY
-	 *            The velocity along the y axis.
+	 * @param dx
+	 *            The difference, on the x axis, between two x values.
+	 * @param dy
+	 *            The difference, on the y axis, between two y values.
 	 * @return The angle between the vector of this velocity, and the x axis.
 	 */
-	private float getVelocityRelativeAngle(float velocityX, float velocityY) {
-		float velocityRelativeAngle = 0;
-		if (velocityX == 0) {
+	private float getNormalVectorsRelativeAngle(float dx, float dy) {
+		float normalVectorsRelativeAngle = 0;
+		if (dx == 0) {
 			// atan would be NaN if velocityX = 0.
-			velocityRelativeAngle = 90;
+			normalVectorsRelativeAngle = 90;
 		} else {
-			velocityRelativeAngle = 180 * (float) (Math.atan(Math.abs(velocityY) / Math.abs(velocityX)) / Math.PI);
+			normalVectorsRelativeAngle = 180 * (float) (Math.atan(Math.abs(dy) / Math.abs(dx)) / Math.PI);
 		}
 
-		return velocityRelativeAngle;
+		return normalVectorsRelativeAngle;
 	}
 
 	/**
-	 * Return the angle of the velocity. Reference axe is the x axis positive,
-	 * and angles are calculated counter clockwise.
+	 * Return the angle, relative to the positive x-axis, of a line that passes
+	 * by (0, 0) and (dx, dy). The angle is calculated counter clockwise from
+	 * positive x-axis, in degrees. The value can be between 0 and 359.
 	 * 
-	 * @param velocityX
-	 *            The velocity along the x axis.
-	 * @param velocityY
-	 *            The velocity along the y axis.
-	 * @return
+	 * @param dx
+	 *            The difference, on the x axis, between two x values.
+	 * @param dy
+	 *            The difference, on the y axis, between two y values.
+	 * @return The angle, relative to the positive x-axis.
 	 */
-	private float getVelocityAngle(float velocityX, float velocityY) {
-		float velocityAngle = 0;
-		float velocityRelativeAngle = getVelocityRelativeAngle(velocityX, velocityY);
+	private float getNormalVectorsAngle(float dx, float dy) {
+		float normalVectorsAngle = 0;
+		float normalVectorsRelativeAngle = getNormalVectorsRelativeAngle(dx, dy);
 
 		// Then, find the initial value for the angle based on its quadrant
 		// in a virtual geometrical plan.
-		if (velocityX >= 0 && velocityY >= 0) {
+		if (dx >= 0 && dy >= 0) {
 			// 1st quadrant.
-			velocityAngle = 0 + velocityRelativeAngle;
-		} else if (velocityX < 0 && velocityY >= 0) {
+			normalVectorsAngle = 0 + normalVectorsRelativeAngle;
+		} else if (dx < 0 && dy >= 0) {
 			// 2nd quadrant.
-			velocityAngle = 180 - velocityRelativeAngle;
-		} else if (velocityX < 0 && velocityY < 0) {
+			normalVectorsAngle = 180 - normalVectorsRelativeAngle;
+		} else if (dx < 0 && dy < 0) {
 			// 3rd quadrant.
-			velocityAngle = 180 + velocityRelativeAngle;
-		} else if (velocityX >= 0 && velocityY < 0) {
+			normalVectorsAngle = 180 + normalVectorsRelativeAngle;
+		} else if (dx >= 0 && dy < 0) {
 			// 4th quadrant.
-			velocityAngle = 360 - velocityRelativeAngle;
+			normalVectorsAngle = 360 - normalVectorsRelativeAngle;
 		}
 
-		return velocityAngle;
+		return normalVectorsAngle;
 	}
 
 	/**
