@@ -5,6 +5,8 @@
     <color name="text_black">#1a1a1a</color>
     <color name="text_white">#fff</color>
     <color name="message_background_white">#fff</color>
+    <color name="background_black">#ff1a1a1a</color>
     <color name="toggle_button_on">#884a4a4a</color>
     <color name="toggle_button_off">#00000000</color>
 </resources>
+

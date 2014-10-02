@@ -47,6 +47,10 @@
             android:label="@string/title_alert_penalty"
             android:theme="@style/Theme.Base.AppCompat.Dialog.FixedSize" >
         </activity>
+        <activity
+            android:name=".ResultsActivity"
+            android:label="@string/title_activity_results" >
+        </activity>
     </application>
 
 </manifest>

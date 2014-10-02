@@ -1,5 +1,7 @@
 package com.gti350.labo1.models;
 
+import com.gti350.labo1.models.utils.ParcelableHelper;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,8 +11,12 @@ import android.os.Parcelable;
  */
 public class Winner implements Parcelable {
 
+	/** Creator object for the parcelable implementation. */
+	public static final Parcelable.Creator<Winner> CREATOR = ParcelableHelper.getDefaultCreator(Winner.class);
+
 	private final Fighter winner;
 	private final WinMethod winMethod;
+	private final JudgeDecision decision;
 
 	/**
 	 * Constructor.
@@ -18,8 +24,8 @@ public class Winner implements Parcelable {
 	 * @param winner
 	 * @param winMethod
 	 */
-	public Winner(Fighter winner, WinMethod winMethod) {
-		if (winner == null) {
+	public Winner(Fighter winner, WinMethod winMethod, JudgeDecision decision) {
+		if (winner == null && decision != JudgeDecision.Undecided) {
 			throw new IllegalArgumentException("winner cannot be null.");
 		}
 
@@ -27,8 +33,13 @@ public class Winner implements Parcelable {
 			throw new IllegalArgumentException("winMethod cannot be null.");
 		}
 
+		if (decision == null) {
+			throw new IllegalArgumentException("decision cannot be null.");
+		}
+
 		this.winner = winner;
 		this.winMethod = winMethod;
+		this.decision = decision;
 	}
 
 	/**
@@ -45,6 +56,7 @@ public class Winner implements Parcelable {
 		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		this.winner = src.readParcelable(classLoader);
 		this.winMethod = WinMethod.valueOf(src.readString());
+		this.decision = JudgeDecision.valueOf(src.readString());
 	}
 
 	@Override
@@ -56,5 +68,27 @@ public class Winner implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeParcelable(this.winner, flags);
 		dest.writeString(this.winMethod.name());
+		dest.writeString(this.decision.name());
+	}
+
+	/**
+	 * @return the winner
+	 */
+	public Fighter getWinner() {
+		return winner;
+	}
+
+	/**
+	 * @return the winMethod
+	 */
+	public WinMethod getWinMethod() {
+		return winMethod;
+	}
+
+	/**
+	 * @return the decision
+	 */
+	public JudgeDecision getDecision() {
+		return decision;
 	}
 }

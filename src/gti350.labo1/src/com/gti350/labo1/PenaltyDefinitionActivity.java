@@ -6,9 +6,9 @@ import java.util.List;
 import com.gti350.labo1.models.Fight;
 import com.gti350.labo1.models.Score;
 
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.NumberPicker;
@@ -81,6 +81,20 @@ public class PenaltyDefinitionActivity extends BaseActivity {
 
 		Button okButton = (Button) findViewById(R.id.button_ok);
 		Button cancelButton = (Button) findViewById(R.id.button_cancel);
+
+		okButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 	private class OnExclusiveToggleButtonCheckedChanged implements OnCheckedChangeListener {

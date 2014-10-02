@@ -5,6 +5,7 @@ import java.util.List;
 import com.gti350.labo1.listeners.SwipeGestureListener;
 import com.gti350.labo1.listeners.SwipeGestureListener.IOnSwipeListener;
 import com.gti350.labo1.models.Fight;
+import com.gti350.labo1.models.JudgeDecision;
 import com.gti350.labo1.models.JudgeScore;
 import com.gti350.labo1.models.Round;
 import com.gti350.labo1.models.Score;
@@ -157,39 +158,33 @@ public class RoundDefinitionActivity extends BaseActivity {
 			builder.setTitle(title).setNegativeButton(this.fight.getFighter1().getName(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
-					Winner winner = new Winner(fight.getFighter2(), winMethod);
+					Winner winner = new Winner(fight.getFighter2(), winMethod, JudgeDecision.NonApplicable);
 					fight.declareWinner(winner);
 					dialog.dismiss();
+
+					Intent i = new Intent(RoundDefinitionActivity.this, ResultsActivity.class);
+					i.putExtra(BaseActivity.FightKey, fight);
+
+					finish();
+					startActivity(i);
 				}
 			}).setPositiveButton(this.fight.getFighter2().getName(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
-					Winner winner = new Winner(fight.getFighter1(), winMethod);
+					Winner winner = new Winner(fight.getFighter1(), winMethod, JudgeDecision.NonApplicable);
 					fight.declareWinner(winner);
 					dialog.dismiss();
+
+					Intent i = new Intent(RoundDefinitionActivity.this, ResultsActivity.class);
+					i.putExtra(BaseActivity.FightKey, fight);
+
+					finish();
+					startActivity(i);
 				}
 			}).create().show();
 		} else if (id == R.id.action_penalty) {
 			handled = true;
 
-			// AlertDialog.Builder builder = new
-			// AlertDialog.Builder(RoundDefinitionActivity.this);
-			// builder.setSingleChoiceItems(new String[] {
-			// fight.getJudge1().getName(), fight.getJudge2().getName(),
-			// fight.getJudge3().getName() }, 0, null);
-			// builder.setTitle(R.string.action_penalty).setNegativeButton(this.fight.getFighter1().getName(),
-			// new DialogInterface.OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int id) {
-			// dialog.dismiss();
-			// }
-			// }).setPositiveButton(this.fight.getFighter2().getName(), new
-			// DialogInterface.OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int id) {
-			// dialog.dismiss();
-			// }
-			// }).create().show();
 			Intent i = new Intent(RoundDefinitionActivity.this, PenaltyDefinitionActivity.class);
 			i.putExtra(BaseActivity.FightKey, fight);
 			startActivity(i);
@@ -407,8 +402,47 @@ public class RoundDefinitionActivity extends BaseActivity {
 
 			// Go to the next round definition, unless we currently did the last
 			// round, in which case we'll go to the results.
-			Intent i = roundCounter > Fight.MaxRound ? new Intent(RoundDefinitionActivity.this, null) : new Intent(RoundDefinitionActivity.this,
-					RoundDefinitionActivity.class);
+			if (roundCounter > Fight.MaxRound) {
+				int judge1RedScore = 0, judge1BlueScore = 0, judge2RedScore = 0, judge2BlueScore = 0, judge3RedScore = 0, judge3BlueScore = 0;
+				for (Round round : fight.getRounds()) {
+					judge1RedScore += round.getJudgeScore1().getScoreFighter1().getEffectiveScore();
+					judge1BlueScore += round.getJudgeScore1().getScoreFighter2().getEffectiveScore();
+
+					judge2RedScore += round.getJudgeScore2().getScoreFighter1().getEffectiveScore();
+					judge2BlueScore += round.getJudgeScore2().getScoreFighter2().getEffectiveScore();
+
+					judge3RedScore += round.getJudgeScore3().getScoreFighter1().getEffectiveScore();
+					judge3BlueScore += round.getJudgeScore3().getScoreFighter2().getEffectiveScore();
+				}
+
+				Winner winner;
+				if (judge1RedScore > judge1BlueScore && judge2RedScore > judge2BlueScore && judge3RedScore > judge3BlueScore) {
+					// Red unanimous.
+					winner = new Winner(fight.getFighter1(), WinMethod.Classic, JudgeDecision.Unanimous);
+				} else if (judge1BlueScore > judge1RedScore && judge2BlueScore > judge2RedScore && judge3BlueScore > judge3RedScore) {
+					// Blue unanimous.
+					winner = new Winner(fight.getFighter2(), WinMethod.Classic, JudgeDecision.Unanimous);
+				} else if ((judge1RedScore > judge1BlueScore && judge2RedScore > judge2BlueScore)
+						|| (judge1RedScore > judge1BlueScore && judge3RedScore > judge3BlueScore)
+						|| (judge2RedScore > judge2BlueScore && judge3RedScore > judge3BlueScore)) {
+					// Red major.
+					winner = new Winner(fight.getFighter1(), WinMethod.Classic, JudgeDecision.Majority);
+				} else if ((judge1BlueScore > judge1RedScore && judge2BlueScore > judge2RedScore)
+						|| (judge1BlueScore > judge1RedScore && judge3BlueScore > judge3RedScore)
+						|| (judge2BlueScore > judge2RedScore && judge3BlueScore > judge3RedScore)) {
+					// Blue major.
+					winner = new Winner(fight.getFighter2(), WinMethod.Classic, JudgeDecision.Majority);
+				} else {
+					// Tie
+					winner = new Winner(null, WinMethod.Classic, JudgeDecision.Undecided);
+				}
+
+				// declare the winner.
+				fight.declareWinner(winner);
+			}
+
+			Intent i = roundCounter > Fight.MaxRound ? new Intent(RoundDefinitionActivity.this, ResultsActivity.class) : new Intent(
+					RoundDefinitionActivity.this, RoundDefinitionActivity.class);
 			i.putExtra(BaseActivity.FightKey, fight);
 			i.putExtra(BaseActivity.CurrentRoundCounterKey, roundCounter);
 
@@ -425,7 +459,7 @@ public class RoundDefinitionActivity extends BaseActivity {
 	public class OnPartialResultSwipeListener implements IOnSwipeListener {
 		@Override
 		public boolean onSwipe(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-			Intent i = new Intent(RoundDefinitionActivity.this, null); // ResultActivity.class
+			Intent i = new Intent(RoundDefinitionActivity.this, ResultsActivity.class);
 			i.putExtra(BaseActivity.FightKey, fight);
 			i.putExtra(BaseActivity.CurrentRoundCounterKey, roundCounter);
 
