@@ -21,6 +21,7 @@
     <string name="title_alert_tko">TKO a fighter</string>
     <string name="title_alert_disqualify">Disqualify a fighter</string>
     <string name="title_alert_penalty">Give penalty</string>
+    <string name="title_alert_back_to_main">Back to Main Menu</string>
     <string name="title_round_advantage">Advantage to</string>
     <!-- Labels -->
     <string name="red_fighter_label">Red Fighter</string>
@@ -31,6 +32,9 @@
     <string name="second_judge_label">2nd Judge</string>
     <string name="third_judge_label">3rd Judge</string>
     <string name="results_decision">Results</string>
+    <string name="penalty_choose_judge">Judge: </string>
+    <string name="penalty_choose_fighter">Gives penalty to fighter: </string>
+    <string name="penalty_choose_weight">Whose score will be lessened by this much: </string>
     <!-- Error messages -->
     <string name="red_fighter_empty">The red fighter must have a name.</string>
     <string name="blue_fighter_empty">The blue fighter must have a name.</string>
@@ -38,5 +42,7 @@
     <string name="second_judge_empty">The second judge must have a name.</string>
     <string name="third_judge_empty">The third judge must have a name.</string>
     <string name="round_number">Round</string>
+    <!-- Message -->
+    <string name="wish_to_continue_question">Do you wish to continue?</string>
 
 </resources>

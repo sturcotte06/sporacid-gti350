@@ -14,7 +14,7 @@ public class SwipeGestureListener extends GestureDetector.SimpleOnGestureListene
 	private static final String LoggingTag = SwipeGestureListener.class.getName();
 
 	/** The threashold, in fling unit, at which the slingis considered a swipe. */
-	private static final int DistanceThreshold = 180;
+	private static final int DistanceThreshold = 120;
 
 	/** The swipe listener for a swipe that happened from left to right. */
 	private IOnSwipeListener leftToRightListener;

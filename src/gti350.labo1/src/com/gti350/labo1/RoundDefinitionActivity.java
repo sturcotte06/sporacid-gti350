@@ -102,12 +102,19 @@ public class RoundDefinitionActivity extends BaseActivity {
 			boolean thirdJudgeFavorsRed = previousRound.getJudgeScore3().getScoreFighter1().getInitialScore() > previousRound.getJudgeScore3()
 					.getScoreFighter2().getInitialScore();
 
+			boolean firstJudgeFavorsBlue = previousRound.getJudgeScore1().getScoreFighter2().getInitialScore() > previousRound.getJudgeScore1()
+					.getScoreFighter1().getInitialScore();
+			boolean secondJudgeFavorsBlue = previousRound.getJudgeScore2().getScoreFighter2().getInitialScore() > previousRound.getJudgeScore2()
+					.getScoreFighter1().getInitialScore();
+			boolean thirdJudgeFavorsBlue = previousRound.getJudgeScore3().getScoreFighter2().getInitialScore() > previousRound.getJudgeScore3()
+					.getScoreFighter1().getInitialScore();
+
 			this.redFighterFirstJudgeButton.setChecked(firstJudgeFavorsRed);
-			this.blueFighterFirstJudgeButton.setChecked(!firstJudgeFavorsRed);
+			this.blueFighterFirstJudgeButton.setChecked(firstJudgeFavorsBlue);
 			this.redFighterSecondJudgeButton.setChecked(secondJudgeFavorsRed);
-			this.blueFighterSecondJudgeButton.setChecked(!secondJudgeFavorsRed);
+			this.blueFighterSecondJudgeButton.setChecked(secondJudgeFavorsBlue);
 			this.redFighterThirdJudgeButton.setChecked(thirdJudgeFavorsRed);
-			this.blueFighterThirdJudgeButton.setChecked(!thirdJudgeFavorsRed);
+			this.blueFighterThirdJudgeButton.setChecked(thirdJudgeFavorsBlue);
 		}
 
 		// Create the listener for swiping.
@@ -147,8 +154,7 @@ public class RoundDefinitionActivity extends BaseActivity {
 			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(RoundDefinitionActivity.this);
-			builder.setTitle(title)
-			.setNegativeButton(this.fight.getFighter1().getName(), new DialogInterface.OnClickListener() {
+			builder.setTitle(title).setNegativeButton(this.fight.getFighter1().getName(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
 					Winner winner = new Winner(fight.getFighter2(), winMethod);
@@ -165,7 +171,48 @@ public class RoundDefinitionActivity extends BaseActivity {
 			}).create().show();
 		} else if (id == R.id.action_penalty) {
 			handled = true;
-			displayAlert("Penalty", "Penalty");
+
+			// AlertDialog.Builder builder = new
+			// AlertDialog.Builder(RoundDefinitionActivity.this);
+			// builder.setSingleChoiceItems(new String[] {
+			// fight.getJudge1().getName(), fight.getJudge2().getName(),
+			// fight.getJudge3().getName() }, 0, null);
+			// builder.setTitle(R.string.action_penalty).setNegativeButton(this.fight.getFighter1().getName(),
+			// new DialogInterface.OnClickListener() {
+			// @Override
+			// public void onClick(DialogInterface dialog, int id) {
+			// dialog.dismiss();
+			// }
+			// }).setPositiveButton(this.fight.getFighter2().getName(), new
+			// DialogInterface.OnClickListener() {
+			// @Override
+			// public void onClick(DialogInterface dialog, int id) {
+			// dialog.dismiss();
+			// }
+			// }).create().show();
+			Intent i = new Intent(RoundDefinitionActivity.this, PenaltyDefinitionActivity.class);
+			i.putExtra(BaseActivity.FightKey, fight);
+			startActivity(i);
+		} else if (id == R.id.action_back_to_main) {
+			handled = true;
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(RoundDefinitionActivity.this);
+			builder.setTitle(R.string.title_alert_back_to_main).setMessage(R.string.wish_to_continue_question)
+					.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					}).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							Intent i = new Intent(RoundDefinitionActivity.this, MainActivity.class);
+
+							finish();
+							startActivity(i);
+							dialog.dismiss();
+						}
+					}).create().show();
 		}
 
 		return handled || super.onOptionsItemSelected(item);
@@ -276,15 +323,14 @@ public class RoundDefinitionActivity extends BaseActivity {
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			if (isChecked && otherFighterButton.isChecked()) {
+			if (isChecked) {
 				// Toggle the other fighter's button.
 				this.otherFighterButton.setChecked(false);
 				this.otherFighterButton.setBackgroundColor(offColor);
 
 				buttonView.setBackgroundColor(onColor);
-			} else if (!otherFighterButton.isChecked()) {
-				// Current button was already checked.
-				buttonView.setChecked(true);
+			} else {
+				buttonView.setBackgroundColor(offColor);
 			}
 		}
 	}
@@ -336,15 +382,27 @@ public class RoundDefinitionActivity extends BaseActivity {
 			// Set every judge scores based on toggle button selection.
 			// If red was selected, red has max pts, blue has min pts and
 			// vice-versa.
-			JudgeScore judgeScore1 = new JudgeScore(fight.getJudge1(), new Score(redFighterFirstJudgeButton.isChecked() ? Score.MaximumScore
-					: Score.MinimumInitialScore), new Score(redFighterFirstJudgeButton.isChecked() ? Score.MinimumInitialScore : Score.MaximumScore));
-			JudgeScore judgeScore2 = new JudgeScore(fight.getJudge2(), new Score(redFighterSecondJudgeButton.isChecked() ? Score.MaximumScore
-					: Score.MinimumInitialScore), new Score(redFighterSecondJudgeButton.isChecked() ? Score.MinimumInitialScore : Score.MaximumScore));
-			JudgeScore judgeScore3 = new JudgeScore(fight.getJudge3(), new Score(redFighterThirdJudgeButton.isChecked() ? Score.MaximumScore
-					: Score.MinimumInitialScore), new Score(redFighterThirdJudgeButton.isChecked() ? Score.MinimumInitialScore : Score.MaximumScore));
+			int judge1ScoreRed = redFighterFirstJudgeButton.isChecked() ? Score.MaximumScore : blueFighterFirstJudgeButton.isChecked()
+					? Score.MinimumInitialScore : Score.MaximumScore;
+			int judge2ScoreRed = redFighterSecondJudgeButton.isChecked() ? Score.MaximumScore : blueFighterSecondJudgeButton.isChecked()
+					? Score.MinimumInitialScore : Score.MaximumScore;
+			int judge3ScoreRed = redFighterThirdJudgeButton.isChecked() ? Score.MaximumScore : blueFighterThirdJudgeButton.isChecked()
+					? Score.MinimumInitialScore : Score.MaximumScore;
+			int judge1ScoreBlue = blueFighterFirstJudgeButton.isChecked() ? Score.MaximumScore : redFighterFirstJudgeButton.isChecked()
+					? Score.MinimumInitialScore : Score.MaximumScore;
+			int judge2ScoreBlue = blueFighterSecondJudgeButton.isChecked() ? Score.MaximumScore : redFighterSecondJudgeButton.isChecked()
+					? Score.MinimumInitialScore : Score.MaximumScore;
+			int judge3ScoreBlue = blueFighterThirdJudgeButton.isChecked() ? Score.MaximumScore : redFighterThirdJudgeButton.isChecked()
+					? Score.MinimumInitialScore : Score.MaximumScore;
+			JudgeScore judgeScore1 = new JudgeScore(fight.getJudge1(), new Score(judge1ScoreRed), new Score(judge1ScoreBlue));
+			JudgeScore judgeScore2 = new JudgeScore(fight.getJudge2(), new Score(judge2ScoreRed), new Score(judge2ScoreBlue));
+			JudgeScore judgeScore3 = new JudgeScore(fight.getJudge3(), new Score(judge3ScoreRed), new Score(judge3ScoreBlue));
 
 			// Register the new round.
 			fight.registerRound(judgeScore1, judgeScore2, judgeScore3);
+			Log.i(LoggingTag, String.format(
+					"Round registered: [Judge %d, red: %d to blue: %d], [Judge %d, red: %d to blue: %d], [Judge %d, red: %d to blue: %d]", 1, judge1ScoreRed,
+					judge1ScoreBlue, 2, judge2ScoreRed, judge2ScoreBlue, 3, judge3ScoreRed, judge3ScoreBlue));
 			roundCounter++;
 
 			// Go to the next round definition, unless we currently did the last

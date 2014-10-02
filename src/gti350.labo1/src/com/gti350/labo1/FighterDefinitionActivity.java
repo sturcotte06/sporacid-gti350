@@ -65,7 +65,7 @@ public class FighterDefinitionActivity extends BaseActivity {
 			blueFighterTextbox.setText(blueFighter.getName());
 		}
 	}
-	
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// Check if the swipe detector can handle the event.
